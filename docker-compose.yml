@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: ifi-pulse-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ifi_pulse
+      POSTGRES_USER: ifi_pulse
+      POSTGRES_PASSWORD: ifi_pulse_dev
+    ports:
+      - "5433:5432"
+    volumes:
+      - ifi_pulse_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ifi_pulse -d ifi_pulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ifi_pulse_postgres_data:
