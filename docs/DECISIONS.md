@@ -20,11 +20,11 @@ The application and npm package are renamed, while the local folder remains `D:\
 
 A single Next.js application with service boundaries is sufficient for the prototype. Microservices would not improve the demonstration.
 
-## ADR-004 — Mock-first AI
+## ADR-004 — Deterministic simulation for the prototype
 
 **Status:** Accepted
 
-`AI_MODE=mock` is the default. It must support the complete demo without network access, API credentials, or variable model behavior.
+The prototype does not connect to a live AI provider. Visitor replies and assessments are deterministic so the demonstration works without network access, API credentials, cost, latency, or variable model behavior. The product may still demonstrate an AI-assisted future concept, but the implemented prototype must describe its feedback as simulated.
 
 ## ADR-005 — Separate roleplay and assessment
 
@@ -48,4 +48,16 @@ Progress, scores, session counts, and manager KPIs must come from PostgreSQL agg
 
 **Status:** Accepted
 
-Docker Compose maps PostgreSQL to `localhost:5433`. Environment configuration keeps the application portable to managed PostgreSQL for a later Vercel deployment.
+Docker Compose maps PostgreSQL to `localhost:55432`. Environment configuration keeps the application portable to managed PostgreSQL for a later Vercel deployment.
+
+## ADR-009 — Source-informed prototype learning content
+
+**Status:** Accepted
+
+No public IFI staff service-training curriculum matching the proposed workshop was found. Official IFI and Institut français sources inform the mission, service areas, and public context only. Lessons, quizzes, scenarios, visitor dialogue, and assessment guidance are original demonstration content and must not be presented as official IFI policy or training material.
+
+## ADR-010 — Vercel is the target public host
+
+**Status:** Accepted
+
+The public prototype will target Vercel. PostgreSQL must use an externally reachable managed provider in production; the local Docker database remains the development environment.

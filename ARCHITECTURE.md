@@ -2,7 +2,7 @@
 
 ## Product boundary
 
-IFI Savoir-Faire Hub is a modular Next.js application for service microlearning, AI visitor roleplay, learning assessment, staff development, and manager insight. It is a focused university prototype rather than a full learning-management or HR platform.
+IFI Savoir-Faire Hub is a modular Next.js application for service microlearning, deterministic visitor roleplay, learning assessment, staff development, and manager insight. It is a focused university prototype rather than a full learning-management or HR platform.
 
 ## System shape
 
@@ -28,8 +28,7 @@ Application services
 ├── Assessment service
 └── Analytics service
         │
-        ├── Deterministic mock AI
-        └── OpenAI adapter
+        └── Deterministic simulation and assessment engine
         │
         ▼
 Prisma Client ── PostgreSQL
@@ -41,7 +40,7 @@ Prisma Client ── PostgreSQL
 src/app/          Routes, layouts, handlers, and composition
 src/components/   Reusable presentation and interaction components
 src/config/       Product, role, and navigation configuration
-src/lib/ai/       AI contracts and provider adapters
+src/lib/simulation/ Deterministic roleplay and assessment rules
 src/lib/auth/     Session and authorization boundaries
 src/lib/db/       Prisma client infrastructure
 src/lib/validation/ Shared Zod schemas
@@ -80,14 +79,14 @@ Pages should not contain direct database mutations. Services own domain rules an
 
 The root route redirects unauthenticated users to `/login` and authenticated users to their role home.
 
-## AI separation
+## Simulation separation
 
 Simulation and assessment are separate operations:
 
-1. The simulation adapter receives the scenario, customer personality, problem, and conversation history. It plays only the visitor and never evaluates the employee.
-2. The assessment adapter receives a completed transcript and returns Zod-validated skill scores, strengths, improvement guidance, and a recommended module.
+1. The simulation engine receives the scenario, visitor personality, problem, and conversation history. It plays only the visitor and never evaluates the employee during practice.
+2. The assessment engine receives a completed transcript and returns Zod-validated skill scores, strengths, improvement guidance, and a recommended module.
 
-`AI_MODE=mock` is the demonstration default. Mock and OpenAI implementations must satisfy the same typed interfaces.
+Both engines are deterministic in this prototype. They do not call an external model or require an API key.
 
 ## Consistency rules
 
@@ -101,4 +100,4 @@ Simulation and assessment are separate operations:
 
 ## Deployment direction
 
-Local development uses Docker PostgreSQL on host port `5433`. A future Vercel deployment should use managed PostgreSQL and production secrets without changing service-layer behavior.
+Local development uses Docker PostgreSQL on host port `55432`. The planned public Vercel deployment will use externally reachable managed PostgreSQL and production secrets without changing service-layer behavior.

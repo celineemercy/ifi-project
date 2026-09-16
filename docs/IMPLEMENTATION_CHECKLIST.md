@@ -18,15 +18,15 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 
 ## Phase 2 — Database
 
-- [ ] Add domain enums and models
-- [ ] Add relational constraints and indexes
-- [ ] Create the initial migration
-- [ ] Seed 12 realistic IFI employees
-- [ ] Seed five workshop-aligned learning modules
-- [ ] Seed five IFI practice scenarios
-- [ ] Seed progress for every employee
-- [ ] Seed 20 completed simulation sessions and assessments
-- [ ] Verify Alex's required starting metrics
+- [x] Add domain enums and models
+- [x] Add relational constraints and indexes
+- [x] Create the initial migration
+- [x] Seed 12 fictional IFI staff profiles
+- [x] Seed five workshop-aligned learning modules
+- [x] Seed five IFI practice scenarios
+- [x] Seed progress for every employee
+- [x] Seed 20 completed simulation sessions and assessments
+- [x] Verify Alex's required starting metrics
 
 ## Phase 3 — Authentication
 
@@ -44,20 +44,18 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 - [ ] Make lesson/module completion idempotent
 - [ ] Update staff progress
 
-## Phase 5 — AI Practice
+## Phase 5 — Practice Simulator
 
 - [ ] Build service-area and scenario selection
 - [ ] Build the professional chat interface
-- [ ] Implement deterministic mock visitor behavior
-- [ ] Implement the OpenAI visitor adapter
+- [ ] Implement deterministic visitor behavior
 - [ ] Store sequenced conversation messages
 - [ ] Support safe end/abandon behavior
 
 ## Phase 6 — Assessment
 
 - [ ] Define and validate the assessment schema
-- [ ] Implement deterministic mock scores
-- [ ] Implement OpenAI assessment
+- [ ] Implement deterministic assessment scores
 - [ ] Make assessment creation idempotent
 - [ ] Show skill scores, strength, improvement, and recommendation
 - [ ] Show the learning-and-development disclaimer
@@ -82,6 +80,6 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 - [ ] Complete responsive and accessibility review
 - [ ] Add loading, empty, and error states
 - [ ] Add critical Playwright demo journey
-- [ ] Rehearse mock mode without OpenAI access
+- [ ] Rehearse the deterministic simulation journey
 - [ ] Document optional Vercel deployment
 - [ ] Run final production build and demo rehearsal

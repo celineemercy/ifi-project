@@ -41,7 +41,7 @@ const navigationByRole: Record<AppRole, NavItem[]> = {
   STAFF: [
     { label: "Home", href: "/home", icon: Gauge },
     { label: "My Learning", href: "/learning", icon: BookOpenCheck },
-    { label: "AI Practice", href: "/practice", icon: MessagesSquare },
+    { label: "Practice Simulator", href: "/practice", icon: MessagesSquare },
     { label: "Assessments", href: "/assessments", icon: ClipboardCheck },
     { label: "Progress", href: "/progress", icon: TrendingUp },
   ],

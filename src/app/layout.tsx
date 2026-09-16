@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: `%s | ${brand.name}`,
   },
   description:
-    "A Pradita University prototype for continuous IFI service learning, AI practice, assessment, and improvement.",
+    "A Pradita University prototype for continuous IFI service learning, deterministic practice, assessment, and improvement.",
 };
 
 export default function RootLayout({

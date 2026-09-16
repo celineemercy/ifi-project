@@ -12,14 +12,14 @@ export default async function PracticeScenarioPage({
   return (
     <main className="p-5 sm:p-8 lg:p-10">
       <PageHeader
-        eyebrow="AI roleplay"
+        eyebrow="Visitor roleplay"
         title="Visitor conversation"
         description={`Requested scenario: ${scenarioId}. The roleplay engine arrives in Phase 5.`}
       />
       <PhasePlaceholder
         phase={5}
         title="Professional chat simulation is not active yet"
-        description="The AI will play only the visitor during the conversation and assessment will begin only when the simulation ends."
+        description="The deterministic simulator will play only the visitor during the conversation. Assessment begins only when the simulation ends."
       />
     </main>
   );

@@ -7,7 +7,7 @@ export default async function PracticePage() {
   return (
     <main className="p-5 sm:p-8 lg:p-10">
       <PageHeader
-        eyebrow="AI practice"
+        eyebrow="Practice simulator"
         title="Practice real IFI service situations"
         description="Choose a service area and rehearse realistic visitor conversations in a safe learning environment."
       />

@@ -7,4 +7,175 @@ datasource db {
   provider = "postgresql"
 }
 
-// Domain models are intentionally introduced in Phase 2.
+enum UserRole {
+  STAFF
+  MANAGER
+  SUPER_ADMIN
+}
+
+enum ModuleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum ServiceArea {
+  COURSES
+  CULTURE
+  MEDIATHEQUE
+  CAMPUS_FRANCE
+  ADMINISTRATION
+}
+
+enum ScenarioDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum SimulationStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+enum ConversationRole {
+  VISITOR
+  EMPLOYEE
+}
+
+model User {
+  id                 String              @id @default(cuid())
+  name               String
+  email              String              @unique
+  passwordHash       String
+  role               UserRole            @default(STAFF)
+  department         String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  moduleProgress     ModuleProgress[]
+  simulationSessions SimulationSession[]
+
+  @@index([role])
+  @@index([department])
+}
+
+model LearningModule {
+  id                     String           @id @default(cuid())
+  slug                   String           @unique
+  title                  String
+  shortTitle             String
+  description            String
+  learningObjective      String
+  order                  Int              @unique
+  durationMinutes        Int
+  status                 ModuleStatus     @default(DRAFT)
+  quiz                    Json?
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+  lessons                 Lesson[]
+  progress                ModuleProgress[]
+  recommendedAssessments Assessment[]
+
+  @@index([status, order])
+}
+
+model Lesson {
+  id              String         @id @default(cuid())
+  moduleId        String
+  title           String
+  summary         String
+  content         String
+  example         String?
+  order           Int
+  durationMinutes Int
+  learningModule  LearningModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([moduleId, order])
+  @@index([moduleId])
+}
+
+model ModuleProgress {
+  id          String         @id @default(cuid())
+  userId      String
+  moduleId    String
+  progress    Int            @default(0)
+  completed   Boolean        @default(false)
+  startedAt   DateTime?
+  completedAt DateTime?
+  updatedAt   DateTime       @updatedAt
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module      LearningModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, moduleId])
+  @@index([userId, completed])
+  @@index([moduleId, completed])
+}
+
+model Scenario {
+  id                  String              @id @default(cuid())
+  slug                String              @unique
+  title               String
+  serviceArea         ServiceArea
+  difficulty          ScenarioDifficulty
+  description         String
+  customerPersonality String
+  learningObjective   String
+  skills              String[]
+  openingMessage      String
+  active              Boolean             @default(true)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  simulationSessions  SimulationSession[]
+
+  @@index([serviceArea, active])
+  @@index([difficulty])
+}
+
+model SimulationSession {
+  id           String                @id @default(cuid())
+  userId       String
+  scenarioId   String
+  status       SimulationStatus      @default(IN_PROGRESS)
+  startedAt    DateTime              @default(now())
+  completedAt  DateTime?
+  overallScore Int?
+  user         User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scenario     Scenario              @relation(fields: [scenarioId], references: [id], onDelete: Restrict)
+  messages     ConversationMessage[]
+  assessment   Assessment?
+
+  @@index([userId, status])
+  @@index([scenarioId, completedAt])
+}
+
+model ConversationMessage {
+  id        String            @id @default(cuid())
+  sessionId String
+  sequence  Int
+  role      ConversationRole
+  content   String
+  createdAt DateTime          @default(now())
+  session   SimulationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, sequence])
+  @@index([sessionId])
+}
+
+model Assessment {
+  id                  String            @id @default(cuid())
+  sessionId           String            @unique
+  communication       Int
+  empathy             Int
+  problemSolving      Int
+  professionalTone    Int
+  clarity             Int
+  overallScore        Int
+  strength            String
+  improvement         String
+  recommendedModuleId String?
+  createdAt           DateTime          @default(now())
+  session             SimulationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  recommendedModule   LearningModule?   @relation(fields: [recommendedModuleId], references: [id], onDelete: SetNull)
+
+  @@index([recommendedModuleId])
+}

@@ -1,6 +1,6 @@
 export const brand = {
   name: "IFI Savoir-Faire Hub",
-  descriptor: "AI-Powered Service Training & Simulation Platform",
+  descriptor: "Service Training & Simulation Platform",
   owner: "Pradita University",
   partner: "Institut français d’Indonésie",
   colors: {

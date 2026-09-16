@@ -1,6 +1,6 @@
 # IFI Savoir-Faire Hub
 
-IFI Savoir-Faire Hub is an AI-powered service training and simulation prototype proposed by Pradita University for Institut français d’Indonésie (IFI).
+IFI Savoir-Faire Hub is a service training and deterministic simulation prototype proposed by Pradita University for Institut français d’Indonésie (IFI).
 
 It extends the Business Management workshop **“Savoir-Faire in Service: Delivering Excellence in Every Interaction”** into a continuous digital learning experience:
 
@@ -10,7 +10,7 @@ This is a university prototype, not an IFI operational system or a formal employ
 
 ## Current status
 
-Phase 1 — Foundation Realignment is implemented:
+Phases 1 and 2 — Foundation Realignment and Database — are implemented:
 
 - Next.js App Router with strict TypeScript
 - Tailwind CSS and shadcn/ui-compatible components
@@ -20,10 +20,12 @@ Phase 1 — Foundation Realignment is implemented:
 - Server-side page-entry authorization checks
 - Complete route foundation for learning, practice, assessment, progress, management, and administration
 - Docker Compose PostgreSQL configuration
-- Prisma 7 configuration boundary
+- Prisma 7 domain schema, migration, and verified deterministic seed data
+- 12 fictional staff profiles, five learning modules, five service scenarios, and 20 completed simulations
+- Alex's required 68% progress, 3/5 completion, seven sessions, and 84% average score
 - ESLint, Prettier, type-check, and production-build scripts
 
-The relational schema and realistic demonstration data begin in Phase 2. Learning values, assessment scores, and manager KPIs are not hardcoded as live data.
+The learning material and service scenarios are source-informed prototype content, not official IFI policy or training material. See [Content sources and status](./docs/CONTENT_SOURCES.md).
 
 ## Technology
 
@@ -31,7 +33,7 @@ The relational schema and realistic demonstration data begin in Phase 2. Learnin
 - Tailwind CSS 4 and shadcn/ui conventions
 - PostgreSQL 17 and Prisma 7
 - Auth.js / NextAuth credentials authentication
-- Zod, Recharts, OpenAI SDK, Lucide, and Sonner
+- Zod, Recharts, Lucide, and Sonner
 - Docker Compose
 
 ## Local setup
@@ -47,16 +49,18 @@ npm install
 Copy-Item .env.example .env.local
 docker compose up -d postgres
 npm run db:generate
+npm run db:migrate
+npm run db:seed
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000). The root route directs each authenticated role to its own workspace.
 
-The prototype maps PostgreSQL to `localhost:5433` because the development machine already uses port `5432`.
+The prototype maps PostgreSQL to `localhost:55432` to avoid native PostgreSQL services on the development machine.
 
 ## Demo accounts
 
-All Phase 1 accounts use the prototype-only password `demo123`.
+All prototype accounts use the prototype-only password `demo123`.
 
 | Role        | Email                 | Destination        |
 | ----------- | --------------------- | ------------------ |
@@ -64,7 +68,9 @@ All Phase 1 accounts use the prototype-only password `demo123`.
 | Manager     | `manager@ifi.demo`    | `/manager`         |
 | Super Admin | `admin@ifi.demo`      | `/admin/scenarios` |
 
-Phase 3 replaces these local bcrypt-backed identities with seeded PostgreSQL users.
+The same identities are already present in the Phase 2 database. Phase 3 moves credential lookup from the temporary configuration file to PostgreSQL.
+
+`npm run db:seed` resets the dedicated prototype data and recreates the verified demonstration dataset.
 
 ## Quality commands
 
@@ -78,16 +84,14 @@ npm run verify
 
 ## Environment variables
 
-| Variable               | Purpose                                              |
-| ---------------------- | ---------------------------------------------------- |
-| `DATABASE_URL`         | PostgreSQL connection string                         |
-| `AUTH_SECRET`          | Auth.js token-signing secret                         |
-| `NEXTAUTH_URL`         | Authentication callback origin                       |
-| `AI_MODE`              | `mock` for reliable demonstrations or `openai` later |
-| `OPENAI_API_KEY`       | Required only when `AI_MODE=openai`                  |
-| `NEXT_PUBLIC_APP_NAME` | Public product name                                  |
+| Variable               | Purpose                        |
+| ---------------------- | ------------------------------ |
+| `DATABASE_URL`         | PostgreSQL connection string   |
+| `AUTH_SECRET`          | Auth.js token-signing secret   |
+| `NEXTAUTH_URL`         | Authentication callback origin |
+| `NEXT_PUBLIC_APP_NAME` | Public product name            |
 
-Never commit `.env.local` or a real API key.
+Never commit `.env.local` or production secrets.
 
 ## Documentation
 
@@ -95,8 +99,9 @@ Never commit `.env.local` or a real API key.
 - [Implementation checklist](./docs/IMPLEMENTATION_CHECKLIST.md)
 - [Demo script](./docs/DEMO_SCRIPT.md)
 - [Brand system](./docs/BRAND_SYSTEM.md)
+- [Content sources and status](./docs/CONTENT_SOURCES.md)
 - [Architecture decisions](./docs/DECISIONS.md)
 
 ## Scope boundary
 
-The prototype does not implement customer feedback, service tickets, payment, course registration, production SSO, HR integration, certificates, branch operations, or formal employee scoring.
+The prototype does not implement live AI, customer feedback, service tickets, payment, course registration, production SSO, HR integration, certificates, branch operations, or formal employee scoring.
