@@ -1,94 +1,87 @@
 # Implementation Checklist
 
-This document is updated at the end of every phase. A phase does not advance while its verification commands are failing.
+A phase does not advance while lint, type-check, relevant tests, or the production build are failing.
 
-## Phase 1 — Foundation
+## Phase 1 — Foundation Realignment
 
-- [x] Initialize Next.js App Router and strict TypeScript
-- [x] Add Tailwind CSS and shadcn/ui-compatible configuration
-- [x] Establish brand tokens and Titillium Web typography
-- [x] Create responsive public and authenticated shells
-- [x] Add working credentials authentication with prototype roles
-- [x] Enforce management and admin routes on the server
-- [x] Add Docker Compose PostgreSQL service
-- [x] Add Prisma configuration boundary
-- [x] Document architecture, brand rules, setup, and decisions
+- [x] Preserve the original IFI Pulse foundation in Git history
+- [x] Rename the application to IFI Savoir-Faire Hub
+- [x] Replace the product workflow with Learn → Practice → Assess → Improve
+- [x] Replace demo credentials and role destinations
+- [x] Add role-specific responsive navigation
+- [x] Add all staff, manager, and admin route foundations
+- [x] Remove feedback, ticket, QR, and operational-system routes
+- [x] Remove QR-code dependencies
+- [x] Update README, architecture, brand, decisions, and demo documentation
 - [x] Pass lint, type-check, format check, and production build
-- [x] Complete desktop and mobile smoke tests
+- [x] Complete desktop and mobile role-flow smoke tests
 
 ## Phase 2 — Database
 
-- [ ] Add enums and all domain models
-- [ ] Add indexes and relationship constraints
-- [ ] Add safe human-readable identifier strategy
-- [ ] Create and run initial migration
-- [ ] Create 50–100 deterministic feedback records
-- [ ] Create 20–30 linked tickets and activity history
-- [ ] Seed branches, departments, touchpoints, and five staff users
-- [ ] Replace local demo authentication with Prisma user lookup
-- [ ] Verify record counts and relationships
+- [ ] Add domain enums and models
+- [ ] Add relational constraints and indexes
+- [ ] Create the initial migration
+- [ ] Seed 12 realistic IFI employees
+- [ ] Seed five workshop-aligned learning modules
+- [ ] Seed five IFI practice scenarios
+- [ ] Seed progress for every employee
+- [ ] Seed 20 completed simulation sessions and assessments
+- [ ] Verify Alex's required starting metrics
 
-## Phase 3 — Feedback
+## Phase 3 — Authentication
 
-- [ ] Build accessible mobile-first feedback form
-- [ ] Validate inputs with Zod
-- [ ] Resolve and preselect touchpoint service/branch
-- [ ] Store contact details only when not anonymous
-- [ ] Create feedback confirmation and feedback number
-- [ ] Add loading, error, success, and duplicate-submit protection
-- [ ] Generate and list sample QR codes
+- [ ] Move credential lookup to PostgreSQL
+- [ ] Retain the three documented demo accounts
+- [ ] Verify staff, manager, and admin boundaries
+- [ ] Verify incorrect credentials and session expiration behavior
 
-## Phase 4 — AI analysis
+## Phase 4 — Learning Hub
 
-- [ ] Define strict Zod output contract
-- [ ] Implement deterministic bilingual keyword analyzer
-- [ ] Implement OpenAI structured-output adapter
-- [ ] Add invalid-output fallback and observability
-- [ ] Store analysis fields on feedback
+- [ ] Build database-backed staff home
+- [ ] Build module listing and lesson view
+- [ ] Fully implement Communication & Empathy
+- [ ] Add three-question quiz
+- [ ] Make lesson/module completion idempotent
+- [ ] Update staff progress
 
-## Phase 5 — Ticket automation
+## Phase 5 — AI Practice
 
-- [ ] Decide actionability from validated analysis
-- [ ] Generate a unique ticket number
-- [ ] Route ticket to the detected department
-- [ ] Create ticket and initial activity transactionally
-- [ ] Verify the primary registration-confusion scenario
+- [ ] Build service-area and scenario selection
+- [ ] Build the professional chat interface
+- [ ] Implement deterministic mock visitor behavior
+- [ ] Implement the OpenAI visitor adapter
+- [ ] Store sequenced conversation messages
+- [ ] Support safe end/abandon behavior
 
-## Phase 6 — Staff ticketing
+## Phase 6 — Assessment
 
-- [ ] Build staff KPIs from database queries
-- [ ] Add ticket table, filters, pagination, and empty states
-- [ ] Build ticket detail and analysis display
-- [ ] Implement assignment and status transitions
-- [ ] Implement resolution notes and activity timeline
-- [ ] Enforce valid transitions and role checks server-side
+- [ ] Define and validate the assessment schema
+- [ ] Implement deterministic mock scores
+- [ ] Implement OpenAI assessment
+- [ ] Make assessment creation idempotent
+- [ ] Show skill scores, strength, improvement, and recommendation
+- [ ] Show the learning-and-development disclaimer
 
-## Phase 7 — Command center
+## Phase 7 — Manager Dashboard
 
-- [ ] Define and document KPI formulas
-- [ ] Add date, branch, and service filters
-- [ ] Add feedback trend and sentiment charts
-- [ ] Add service, issue, resolution, and branch reporting
-- [ ] Verify all values against database fixtures
+- [ ] Aggregate team participation and completion
+- [ ] Aggregate skill averages
+- [ ] Add database-backed charts
+- [ ] Label recommendations Suggested Training Focus
+- [ ] Avoid individual formal-performance framing
 
-## Phase 8 — Insights
+## Phase 8 — Admin Scenario Manager
 
-- [ ] Aggregate recurring issues and service patterns
-- [ ] Generate cautious insight copy
-- [ ] Label recommendations as “Suggested Improvement”
-- [ ] Show evidence period and affected service
+- [ ] List and filter scenarios
+- [ ] Create and edit scenarios
+- [ ] Activate and deactivate scenarios
+- [ ] Validate mutations and enforce admin authorization
 
-## Phase 9 — AI coach
+## Phase 9 — Demo Polish
 
-- [ ] Add three approved training scenarios
-- [ ] Implement conversation loop
-- [ ] Score empathy, clarity, problem solving, and tone
-- [ ] Present actionable coaching suggestions
-
-## Phase 10 — Polish and release
-
-- [ ] Complete responsive, accessibility, and keyboard review
-- [ ] Add final loading, error, and empty states
-- [ ] Add critical Playwright journey
-- [ ] Add Vercel-ready managed database instructions
-- [ ] Run production build and final demo rehearsal
+- [ ] Complete responsive and accessibility review
+- [ ] Add loading, empty, and error states
+- [ ] Add critical Playwright demo journey
+- [ ] Rehearse mock mode without OpenAI access
+- [ ] Document optional Vercel deployment
+- [ ] Run final production build and demo rehearsal

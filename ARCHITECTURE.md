@@ -1,111 +1,104 @@
-# IFI Pulse Architecture
+# IFI Savoir-Faire Hub Architecture
 
-## Purpose
+## Product boundary
 
-IFI Pulse is a modular Next.js application that demonstrates a complete service-improvement workflow without introducing microservices or infrastructure that a university prototype does not need.
+IFI Savoir-Faire Hub is a modular Next.js application for service microlearning, AI visitor roleplay, learning assessment, staff development, and manager insight. It is a focused university prototype rather than a full learning-management or HR platform.
 
 ## System shape
 
 ```text
 Browser
-  ├─ Public feedback experience
-  └─ Authenticated staff and management workspace
-          │
-          ▼
+├── Staff learning workspace
+├── Manager development dashboard
+└── Admin content workspace
+        │
+        ▼
 Next.js App Router
-  ├─ Server-rendered pages and route layouts
-  ├─ Route handlers / server actions
-  ├─ Zod validation
-  └─ Role-aware authorization
-          │
-          ▼
+├── Server Components for reads
+├── Client Components for chat interactions
+├── Server Actions for controlled mutations
+├── Route handlers for simulation messages
+├── Zod validation
+└── Page-entry authorization checks
+        │
+        ▼
 Application services
-  ├─ Feedback service
-  ├─ AI analysis adapter
-  ├─ Ticket service
-  ├─ Analytics service
-  └─ Touchpoint service
-          │
-          ▼
+├── Learning service
+├── Simulation service
+├── Assessment service
+└── Analytics service
+        │
+        ├── Deterministic mock AI
+        └── OpenAI adapter
+        │
+        ▼
 Prisma Client ── PostgreSQL
 ```
 
-The OpenAI integration is an adapter behind `analyzeFeedback()`. The deterministic mock analyzer implements the same validated result contract, so ticket creation does not care which analyzer produced the result.
-
-## Directory boundaries
+## Code boundaries
 
 ```text
-src/app/          Routes, layouts, route handlers, and composition
+src/app/          Routes, layouts, handlers, and composition
 src/components/   Reusable presentation and interaction components
-src/config/       Stable product, brand, and navigation configuration
-src/lib/          Infrastructure adapters, shared utilities, auth, validation
-src/services/     Use-case orchestration and database transactions
+src/config/       Product, role, and navigation configuration
+src/lib/ai/       AI contracts and provider adapters
+src/lib/auth/     Session and authorization boundaries
+src/lib/db/       Prisma client infrastructure
+src/lib/validation/ Shared Zod schemas
+src/services/     Learning, simulation, assessment, and analytics use cases
 src/types/        Shared TypeScript declarations
 prisma/           Schema, migrations, and deterministic seed data
-docs/             Product and engineering records
+docs/             Product, demo, brand, and engineering records
 ```
 
-Pages must not contain direct database queries. They call a service or a narrowly scoped server-side query function. This keeps data rules reusable across UI, route handlers, seed verification, and tests.
+Pages should not contain direct database mutations. Services own domain rules and transactions. Protected page entry points verify the session and role on the server; navigation visibility is only a usability layer.
 
 ## Route topology
 
-- `/` — product introduction
-- `/feedback` — public feedback submission
-- `/feedback/[touchpoint]` — preselected service/branch submission
-- `/login` — credentials sign-in
-- `/dashboard` — management command center
-- `/dashboard/analytics` — detailed analytics
-- `/dashboard/insights` — suggested improvements
-- `/staff` — ticket workspace
-- `/staff/tickets/[id]` — ticket detail and resolution
-- `/admin/touchpoints` — QR touchpoint administration
-- `/admin/users` — prototype user administration
-- `/coach` — deferred service coaching
+### Staff
 
-Route groups separate public, authentication, and protected shells without changing the URLs.
+- `/home`
+- `/learning`
+- `/learning/[moduleId]`
+- `/practice`
+- `/practice/[scenarioId]`
+- `/assessment/[sessionId]`
+- `/assessments`
+- `/progress`
 
-## Authentication and authorization
+### Manager
 
-Phase 1 uses Auth.js JWT sessions and local bcrypt-hashed demonstration identities. Phase 2 moves identity lookup to PostgreSQL while retaining the session shape.
+- `/manager`
+- `/manager/team`
+- `/manager/skills`
 
-Authorization is centralized in a cached server-side session helper and rechecked at protected page entry points. Layout checks support the shell but are not treated as the security boundary:
+### Super Admin
 
-- `SUPER_ADMIN`: all routes
-- `MANAGER`: dashboard, analytics, insights, tickets
-- `STAFF`: ticket workspace and coach
+- `/admin/learning`
+- `/admin/scenarios`
+- `/admin/users`
 
-Navigation visibility is a usability layer, not the security boundary.
+The root route redirects unauthenticated users to `/login` and authenticated users to their role home.
 
-## Data and consistency rules
+## AI separation
 
-Phase 2 will establish the complete schema. Important invariants are already agreed:
+Simulation and assessment are separate operations:
 
-- feedback and ticket numbers are unique and transactionally generated;
-- one feedback item creates at most one service ticket;
-- anonymous feedback never stores a contact email;
-- ticket status changes and activity records commit in one transaction;
-- all timestamps are stored in UTC and displayed in Asia/Jakarta;
-- analytics are database aggregations, never hardcoded KPI values.
+1. The simulation adapter receives the scenario, customer personality, problem, and conversation history. It plays only the visitor and never evaluates the employee.
+2. The assessment adapter receives a completed transcript and returns Zod-validated skill scores, strengths, improvement guidance, and a recommended module.
 
-## AI boundary
+`AI_MODE=mock` is the demonstration default. Mock and OpenAI implementations must satisfy the same typed interfaces.
 
-Both AI modes return the same Zod-validated object:
+## Consistency rules
 
-```ts
-{
-  sentiment: "positive" | "neutral" | "negative";
-  category: string;
-  subcategory: string;
-  urgency: "low" | "medium" | "high" | "critical";
-  department: string;
-  summary: string;
-  requiresAction: boolean;
-  confidence: number;
-}
-```
-
-`AI_MODE=mock` is the safe demonstration default. Invalid OpenAI output must fail closed into the documented fallback rather than interrupt public feedback submission.
+- Completing a lesson is idempotent.
+- Ending a simulation creates at most one assessment.
+- Conversation messages have a stable sequence.
+- Assessment scores remain within `0–100`.
+- Recommendations are labeled for learning and development.
+- Manager metrics use database aggregation, not hardcoded KPI values.
+- All timestamps are stored in UTC and displayed in Asia/Jakarta.
 
 ## Deployment direction
 
-Local development uses Docker PostgreSQL. A later Vercel deployment should use a managed PostgreSQL provider and production secrets. The application code must not assume the database is on localhost.
+Local development uses Docker PostgreSQL on host port `5433`. A future Vercel deployment should use managed PostgreSQL and production secrets without changing service-layer behavior.

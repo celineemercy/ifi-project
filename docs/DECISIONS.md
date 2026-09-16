@@ -1,43 +1,51 @@
 # Architecture Decisions
 
-## ADR-001 — Modular monolith
+## ADR-001 — Replace the IFI Pulse product scope
 
 **Status:** Accepted
 
-IFI Pulse uses a single Next.js application with explicit service and infrastructure boundaries. A prototype does not benefit from microservice deployment or distributed consistency concerns.
+Customer feedback, service tickets, touchpoints, and operational analytics are outside the current prototype. The active product is IFI Savoir-Faire Hub, centered on staff learning and simulation.
 
-## ADR-002 — PostgreSQL through Docker for local development
+The original foundation is preserved in Git commit `aa36a4c`.
 
-**Status:** Accepted
-
-Docker Compose provides a repeatable PostgreSQL 17 environment. `DATABASE_URL` keeps the application portable to a managed PostgreSQL service if Vercel deployment is later approved.
-
-## ADR-003 — Mock-first AI
+## ADR-002 — Keep the physical workspace path
 
 **Status:** Accepted
 
-`AI_MODE=mock` is the default so demonstrations never depend on network availability or API credits. The OpenAI adapter must implement the same Zod schema.
+The application and npm package are renamed, while the local folder remains `D:\webs\IFI-Pulse` to avoid unnecessary path disruption.
 
-## ADR-004 — Credentials-only prototype authentication
-
-**Status:** Accepted
-
-External identity providers would add consent, tenant, and deployment complexity without proving the core service workflow. Phase 1 uses local bcrypt hashes; Phase 2 uses seeded PostgreSQL users.
-
-## ADR-005 — English-first interface
+## ADR-003 — Modular monolith
 
 **Status:** Accepted
 
-The application UI and documentation use English. The analyzer will still recognize common Indonesian feedback phrases because the primary demo input is Indonesian.
+A single Next.js application with service boundaries is sufficient for the prototype. Microservices would not improve the demonstration.
 
-## ADR-006 — Real analytics only
-
-**Status:** Accepted
-
-Command-center KPI cards and charts remain empty or explicitly in preview until database records and aggregate queries exist. Presentation placeholders must never resemble live metrics.
-
-## ADR-007 — Vercel is optional, not a Phase 1 dependency
+## ADR-004 — Mock-first AI
 
 **Status:** Accepted
 
-The architecture remains Vercel-compatible, but local reproducibility and the classroom demonstration take priority. Deployment is considered after the end-to-end workflow is stable.
+`AI_MODE=mock` is the default. It must support the complete demo without network access, API credentials, or variable model behavior.
+
+## ADR-005 — Separate roleplay and assessment
+
+**Status:** Accepted
+
+The roleplay model only plays the visitor. Evaluation begins only after the employee ends the simulation. This avoids coaching leakage during practice and produces a clearer assessment boundary.
+
+## ADR-006 — Learning feedback is not HR evaluation
+
+**Status:** Accepted
+
+Scores and recommendations are training aids. The UI must display the required disclaimer and avoid formal employee-ranking language.
+
+## ADR-007 — Real progress and analytics only
+
+**Status:** Accepted
+
+Progress, scores, session counts, and manager KPIs must come from PostgreSQL aggregation after seed data exists. Foundation pages use clearly labeled phase previews instead of simulated live values.
+
+## ADR-008 — Local PostgreSQL through Docker
+
+**Status:** Accepted
+
+Docker Compose maps PostgreSQL to `localhost:5433`. Environment configuration keeps the application portable to managed PostgreSQL for a later Vercel deployment.

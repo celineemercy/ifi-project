@@ -12,31 +12,31 @@ export type DemoAccount = {
 export const demoAccounts: DemoAccount[] = [
   {
     id: "demo-admin",
-    name: "IFI Pulse Admin",
-    email: "admin@ifi-pulse.demo",
+    name: "IFI Savoir-Faire Admin",
+    email: "admin@ifi.demo",
     role: "SUPER_ADMIN",
     department: null,
     passwordHash:
-      "$2b$10$llgqzaFC9DvHweQE32577eVDHHqpoVN2fJRBoa/ocwYFU9lsgHKlG",
+      "$2b$10$IxP4pkOsNeZk9tcPrYLueulfy9ZeQN//kpJU24UNCydkrqr1WjIrG",
   },
   {
     id: "demo-manager",
-    name: "IFI Service Manager",
-    email: "manager@ifi-pulse.demo",
+    name: "IFI Learning Manager",
+    email: "manager@ifi.demo",
     role: "MANAGER",
     department: null,
     passwordHash:
-      "$2b$10$oKyaLOxEZtlxhs1wJ3C15eRNYAtyZekNO7zjeiIT3F/wiUL9Fb3Pa",
+      "$2b$10$un8RS8VJRZTxRnRYGUb5xuSafWaeyZwrpH1t0b5L8FfsTeCcgEZea",
   },
   {
     id: "demo-staff",
-    name: "IFI Courses Staff",
-    email: "staff@ifi-pulse.demo",
+    name: "Alex",
+    email: "alex.staff@ifi.demo",
     role: "STAFF",
     department: "Courses",
     passwordHash:
-      "$2b$10$QLEFQ.0f6YYl2Wgl0jYNQ.bogCxf6MlgQ6hvddEhEUEb0ZpeFfGEi",
+      "$2b$10$n5NoKO1u8kw89sNaAnqqtuC5o0q.i6BGlEedrBGjP.Slnvm8Bqt5e",
   },
 ];
 
-export const demoPassword = "PulseDemo2026!";
+export const demoPassword = "demo123";

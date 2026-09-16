@@ -10,11 +10,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: `${brand.name} — Service Experience Platform`,
+    default: `${brand.name} — Service Training Platform`,
     template: `%s | ${brand.name}`,
   },
   description:
-    "A Pradita University prototype for capturing, understanding, resolving, and improving IFI service experiences.",
+    "A Pradita University prototype for continuous IFI service learning, AI practice, assessment, and improvement.",
 };
 
 export default function RootLayout({

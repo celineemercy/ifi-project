@@ -6,25 +6,25 @@ import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/login-form";
 import { ProductMark } from "@/components/brand/product-mark";
 
-export const metadata: Metadata = { title: "Staff sign in" };
+export const metadata: Metadata = { title: "Sign in" };
 
 export default function LoginPage() {
   return (
     <main className="grid min-h-screen bg-white lg:grid-cols-[0.9fr_1.1fr]">
       <section className="flex items-center justify-center px-5 py-12 sm:px-8">
         <div className="w-full max-w-md">
-          <Link href="/" aria-label="Return to IFI Pulse home">
+          <Link href="/" aria-label="Return to IFI Savoir-Faire Hub">
             <ProductMark />
           </Link>
           <p className="text-brand-green mt-12 text-sm font-semibold tracking-[0.15em] uppercase">
-            Staff workspace
+            Continuous service learning
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight">
             Welcome back.
           </h1>
           <p className="text-muted-foreground mt-3 leading-7">
-            Sign in with a prototype account to access the IFI service
-            workspace.
+            Sign in with a prototype account to learn, practice, assess, and
+            improve.
           </p>
           <Suspense
             fallback={
@@ -35,7 +35,7 @@ export default function LoginPage() {
           </Suspense>
           <p className="text-muted-foreground mt-6 text-xs leading-5">
             These accounts contain demonstration data only. Database-backed
-            users will replace them in Phase 2.
+            users will replace them in Phase 3.
           </p>
         </div>
       </section>
@@ -44,11 +44,24 @@ export default function LoginPage() {
         <div className="absolute inset-0 [background-image:radial-gradient(circle_at_center,white_1px,transparent_1.5px)] [background-size:28px_28px] opacity-10" />
         <div className="relative max-w-xl">
           <p className="text-sm font-semibold tracking-[0.16em] text-white/65 uppercase">
-            A connected service loop
+            Beyond the workshop
           </p>
           <h2 className="mt-4 text-5xl leading-tight font-bold">
-            Every service signal deserves a clear next step.
+            Great service grows through continuous practice.
           </h2>
+          <div className="mt-8 grid grid-cols-4 gap-2 text-center text-sm font-semibold">
+            {["Learn", "Practice", "Assess", "Improve"].map((step, index) => (
+              <div
+                key={step}
+                className="rounded-xl border border-white/15 bg-white/10 px-2 py-3"
+              >
+                <span className="block text-xs text-white/50">
+                  0{index + 1}
+                </span>
+                <span className="mt-1 block">{step}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="relative rounded-2xl border border-white/15 bg-white/10 p-7 backdrop-blur-sm">
           <p className="text-sm text-white/65">Designed by</p>

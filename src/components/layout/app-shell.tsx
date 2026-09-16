@@ -3,18 +3,19 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { LucideIcon } from "lucide-react";
 import {
   BarChart3,
+  BookMarked,
+  BookOpenCheck,
   BrainCircuit,
-  ChartNoAxesCombined,
-  ClipboardList,
-  LayoutDashboard,
-  Lightbulb,
+  ClipboardCheck,
+  Gauge,
   Menu,
-  MessageSquareText,
-  QrCode,
-  Settings,
+  MessagesSquare,
+  TrendingUp,
   Users,
+  UsersRound,
   X,
 } from "lucide-react";
 
@@ -30,62 +31,37 @@ type ShellUser = {
   role: AppRole;
 };
 
-const navigation = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-    roles: ["SUPER_ADMIN", "MANAGER"],
-  },
-  {
-    label: "Feedback",
-    href: "/feedback",
-    icon: MessageSquareText,
-    roles: ["SUPER_ADMIN", "MANAGER", "STAFF"],
-  },
-  {
-    label: "Tickets",
-    href: "/staff",
-    icon: ClipboardList,
-    roles: ["SUPER_ADMIN", "MANAGER", "STAFF"],
-  },
-  {
-    label: "Analytics",
-    href: "/dashboard/analytics",
-    icon: BarChart3,
-    roles: ["SUPER_ADMIN", "MANAGER"],
-  },
-  {
-    label: "Insights",
-    href: "/dashboard/insights",
-    icon: Lightbulb,
-    roles: ["SUPER_ADMIN", "MANAGER"],
-  },
-  {
-    label: "AI Coach",
-    href: "/coach",
-    icon: BrainCircuit,
-    roles: ["SUPER_ADMIN", "MANAGER", "STAFF"],
-  },
-  {
-    label: "Touchpoints",
-    href: "/admin/touchpoints",
-    icon: QrCode,
-    roles: ["SUPER_ADMIN"],
-  },
-  { label: "Users", href: "/admin/users", icon: Users, roles: ["SUPER_ADMIN"] },
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: Settings,
-    roles: ["SUPER_ADMIN"],
-  },
-] satisfies Array<{
+type NavItem = {
   label: string;
   href: string;
-  icon: typeof ChartNoAxesCombined;
-  roles: AppRole[];
-}>;
+  icon: LucideIcon;
+};
+
+const navigationByRole: Record<AppRole, NavItem[]> = {
+  STAFF: [
+    { label: "Home", href: "/home", icon: Gauge },
+    { label: "My Learning", href: "/learning", icon: BookOpenCheck },
+    { label: "AI Practice", href: "/practice", icon: MessagesSquare },
+    { label: "Assessments", href: "/assessments", icon: ClipboardCheck },
+    { label: "Progress", href: "/progress", icon: TrendingUp },
+  ],
+  MANAGER: [
+    { label: "Dashboard", href: "/manager", icon: Gauge },
+    { label: "Team Progress", href: "/manager/team", icon: UsersRound },
+    { label: "Skill Insights", href: "/manager/skills", icon: BarChart3 },
+  ],
+  SUPER_ADMIN: [
+    { label: "Learning Content", href: "/admin/learning", icon: BookMarked },
+    { label: "Scenarios", href: "/admin/scenarios", icon: BrainCircuit },
+    { label: "Users", href: "/admin/users", icon: Users },
+  ],
+};
+
+const homeByRole: Record<AppRole, string> = {
+  STAFF: "/home",
+  MANAGER: "/manager",
+  SUPER_ADMIN: "/admin/scenarios",
+};
 
 export function AppShell({
   user,
@@ -96,17 +72,15 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const visibleItems = navigation.filter((item) =>
-    item.roles.includes(user.role),
-  );
+  const navigation = navigationByRole[user.role];
 
   return (
     <div className="bg-background min-h-screen lg:grid lg:grid-cols-[272px_1fr]">
       <aside className="hidden min-h-screen flex-col bg-[#053b23] p-5 text-white lg:flex">
-        <Link href="/dashboard" className="px-2 py-3">
+        <Link href={homeByRole[user.role]} className="px-2 py-3">
           <ProductMark inverse />
         </Link>
-        <NavItems items={visibleItems} pathname={pathname} />
+        <NavItems items={navigation} pathname={pathname} />
         <UserFooter user={user} />
       </aside>
 
@@ -130,7 +104,7 @@ export function AppShell({
               className="absolute inset-0 bg-black/45"
               onClick={() => setMobileOpen(false)}
             />
-            <aside className="relative flex h-full w-[min(86vw,320px)] flex-col bg-[#053b23] p-5 text-white shadow-2xl">
+            <aside className="relative flex h-full w-[min(88vw,330px)] flex-col bg-[#053b23] p-5 text-white shadow-2xl">
               <div className="flex items-center justify-between px-2 py-3">
                 <ProductMark inverse />
                 <Button
@@ -144,7 +118,7 @@ export function AppShell({
                 </Button>
               </div>
               <NavItems
-                items={visibleItems}
+                items={navigation}
                 pathname={pathname}
                 onNavigate={() => setMobileOpen(false)}
               />
@@ -164,7 +138,7 @@ function NavItems({
   pathname,
   onNavigate,
 }: {
-  items: typeof navigation;
+  items: NavItem[];
   pathname: string;
   onNavigate?: () => void;
 }) {
@@ -173,8 +147,7 @@ function NavItems({
       {items.map((item) => {
         const Icon = item.icon;
         const active =
-          pathname === item.href ||
-          (item.href !== "/dashboard" && pathname.startsWith(`${item.href}/`));
+          pathname === item.href || pathname.startsWith(`${item.href}/`);
         return (
           <Link
             key={item.href}

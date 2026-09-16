@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 
@@ -9,14 +9,19 @@ import { Button } from "@/components/ui/button";
 import { demoPassword } from "@/config/demo-accounts";
 
 const demoEmails = [
-  "admin@ifi-pulse.demo",
-  "manager@ifi-pulse.demo",
-  "staff@ifi-pulse.demo",
+  "alex.staff@ifi.demo",
+  "manager@ifi.demo",
+  "admin@ifi.demo",
 ] as const;
+
+const destinationByEmail: Record<(typeof demoEmails)[number], string> = {
+  "alex.staff@ifi.demo": "/home",
+  "manager@ifi.demo": "/manager",
+  "admin@ifi.demo": "/admin/scenarios",
+};
 
 export function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState<(typeof demoEmails)[number]>(
     demoEmails[0],
   );
@@ -41,7 +46,7 @@ export function LoginForm() {
       return;
     }
 
-    router.push(searchParams.get("callbackUrl") || "/dashboard");
+    router.push(destinationByEmail[email]);
     router.refresh();
   }
 
@@ -56,9 +61,9 @@ export function LoginForm() {
           }
           className="border-border focus:border-brand-green focus:ring-brand-green/15 h-11 w-full rounded-lg border bg-white px-3 outline-none focus:ring-2"
         >
-          <option value={demoEmails[0]}>Super Admin</option>
+          <option value={demoEmails[0]}>Alex — Staff</option>
           <option value={demoEmails[1]}>Manager</option>
-          <option value={demoEmails[2]}>Courses Staff</option>
+          <option value={demoEmails[2]}>Super Admin</option>
         </select>
         <span className="text-muted-foreground mt-1.5 block text-xs">
           {email}

@@ -8,13 +8,13 @@ export default async function UsersPage() {
     <main className="p-5 sm:p-8 lg:p-10">
       <PageHeader
         eyebrow="Administration"
-        title="Users and access"
-        description="Manage prototype staff accounts, departments, and roles."
+        title="Demo users"
+        description="Manage prototype staff, manager, and administrator accounts."
       />
       <PhasePlaceholder
-        phase={2}
-        title="Database-backed users follow the schema"
-        description="Phase 2 replaces the temporary local demo accounts with seeded users and department relationships."
+        phase={3}
+        title="Database-backed accounts follow the seed data"
+        description="Phase 3 replaces temporary local identities with the 12 seeded employee records and role protection."
       />
     </main>
   );

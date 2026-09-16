@@ -1,10 +1,10 @@
 import { requireRole } from "@/lib/auth/session";
 
-export default async function DashboardLayout({
+export default async function ManagerLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await requireRole(["SUPER_ADMIN", "MANAGER"]);
+  await requireRole(["MANAGER"]);
   return children;
 }

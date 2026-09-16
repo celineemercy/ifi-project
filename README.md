@@ -1,34 +1,37 @@
-# IFI Pulse
+# IFI Savoir-Faire Hub
 
-IFI Pulse is a functional university prototype for improving service experiences at Institut français d’Indonésie (IFI). It connects visitor feedback to structured analysis, service-ticket resolution, and management insight through one continuous loop:
+IFI Savoir-Faire Hub is an AI-powered service training and simulation prototype proposed by Pradita University for Institut français d’Indonésie (IFI).
 
-**Capture → Understand → Resolve → Improve**
+It extends the Business Management workshop **“Savoir-Faire in Service: Delivering Excellence in Every Interaction”** into a continuous digital learning experience:
 
-The prototype is proposed by Pradita University. It is intentionally designed as a focused full-stack demonstration rather than an enterprise platform.
+**Learn → Practice → Assess → Improve**
+
+This is a university prototype, not an IFI operational system or a formal employee-performance platform.
 
 ## Current status
 
-Phase 1 — Foundation is implemented:
+Phase 1 — Foundation Realignment is implemented:
 
 - Next.js App Router with strict TypeScript
-- Tailwind CSS and a shadcn/ui-compatible component setup
-- Pradita-led visual tokens with Titillium Web
-- Official IFI artwork preserved as supplied by IFI's public website
-- Responsive public and protected application shells
-- Auth.js credentials flow with three local demo roles
+- Tailwind CSS and shadcn/ui-compatible components
+- Titillium Web with Pradita-led brand tokens
+- Responsive, role-specific workspace navigation
+- Working prototype authentication for Staff, Manager, and Super Admin
+- Server-side page-entry authorization checks
+- Complete route foundation for learning, practice, assessment, progress, management, and administration
 - Docker Compose PostgreSQL configuration
-- Prisma 7 configuration and an empty Phase 1 schema boundary
+- Prisma 7 configuration boundary
 - ESLint, Prettier, type-check, and production-build scripts
 
-The domain schema, migrations, and seed dataset begin in Phase 2. No analytics values are hardcoded.
+The relational schema and realistic demonstration data begin in Phase 2. Learning values, assessment scores, and manager KPIs are not hardcoded as live data.
 
-## Tech stack
+## Technology
 
-- Next.js 16, React 19, TypeScript
-- Tailwind CSS 4, shadcn/ui conventions, Lucide icons
-- PostgreSQL 17, Prisma 7
+- Next.js 16, React 19, and TypeScript
+- Tailwind CSS 4 and shadcn/ui conventions
+- PostgreSQL 17 and Prisma 7
 - Auth.js / NextAuth credentials authentication
-- Zod, Recharts, OpenAI SDK
+- Zod, Recharts, OpenAI SDK, Lucide, and Sonner
 - Docker Compose
 
 ## Local setup
@@ -39,49 +42,33 @@ Requirements:
 - npm
 - Docker Desktop with Docker Compose
 
-Install packages and prepare environment variables:
-
-```bash
+```powershell
 npm install
-copy .env.example .env.local
-```
-
-On macOS or Linux, use `cp` instead of `copy`.
-
-Start PostgreSQL:
-
-```bash
+Copy-Item .env.example .env.local
 docker compose up -d postgres
-```
-
-The prototype maps PostgreSQL to `localhost:5433` to avoid colliding with an existing local PostgreSQL installation.
-
-Generate the Prisma client and start the app:
-
-```bash
 npm run db:generate
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). The root route directs each authenticated role to its own workspace.
 
-The Phase 1 schema intentionally contains no models, so no migration is needed yet.
+The prototype maps PostgreSQL to `localhost:5433` because the development machine already uses port `5432`.
 
 ## Demo accounts
 
-All Phase 1 accounts use the development-only password `PulseDemo2026!`.
+All Phase 1 accounts use the prototype-only password `demo123`.
 
-| Role        | Email                    |
-| ----------- | ------------------------ |
-| Super Admin | `admin@ifi-pulse.demo`   |
-| Manager     | `manager@ifi-pulse.demo` |
-| Staff       | `staff@ifi-pulse.demo`   |
+| Role        | Email                 | Destination        |
+| ----------- | --------------------- | ------------------ |
+| Staff       | `alex.staff@ifi.demo` | `/home`            |
+| Manager     | `manager@ifi.demo`    | `/manager`         |
+| Super Admin | `admin@ifi.demo`      | `/admin/scenarios` |
 
-These temporary bcrypt-backed local accounts are replaced by seeded PostgreSQL users in Phase 2.
+Phase 3 replaces these local bcrypt-backed identities with seeded PostgreSQL users.
 
 ## Quality commands
 
-```bash
+```powershell
 npm run lint
 npm run typecheck
 npm run format:check
@@ -91,30 +78,25 @@ npm run verify
 
 ## Environment variables
 
-| Variable               | Purpose                                          |
-| ---------------------- | ------------------------------------------------ |
-| `DATABASE_URL`         | PostgreSQL connection string                     |
-| `AUTH_SECRET`          | Auth.js token signing secret                     |
-| `NEXTAUTH_URL`         | Local authentication callback origin             |
-| `AI_MODE`              | `mock` for deterministic demos or `openai` later |
-| `OPENAI_API_KEY`       | Required only when `AI_MODE=openai`              |
-| `NEXT_PUBLIC_APP_NAME` | Public application name                          |
+| Variable               | Purpose                                              |
+| ---------------------- | ---------------------------------------------------- |
+| `DATABASE_URL`         | PostgreSQL connection string                         |
+| `AUTH_SECRET`          | Auth.js token-signing secret                         |
+| `NEXTAUTH_URL`         | Authentication callback origin                       |
+| `AI_MODE`              | `mock` for reliable demonstrations or `openai` later |
+| `OPENAI_API_KEY`       | Required only when `AI_MODE=openai`                  |
+| `NEXT_PUBLIC_APP_NAME` | Public product name                                  |
 
-Never commit `.env.local` or a real OpenAI key.
+Never commit `.env.local` or a real API key.
 
-## Project documentation
+## Documentation
 
 - [Architecture](./ARCHITECTURE.md)
 - [Implementation checklist](./docs/IMPLEMENTATION_CHECKLIST.md)
+- [Demo script](./docs/DEMO_SCRIPT.md)
 - [Brand system](./docs/BRAND_SYSTEM.md)
 - [Architecture decisions](./docs/DECISIONS.md)
 
-## Planned demo journey
+## Scope boundary
 
-1. Open `/feedback/course-jakarta`.
-2. Submit a two-star registration complaint.
-3. Mock AI classifies the complaint and creates a Courses ticket.
-4. A staff member starts progress, adds a resolution note, and resolves it.
-5. The management dashboard recalculates its metrics from PostgreSQL.
-
-This journey is completed incrementally across Phases 2–8 and will receive an end-to-end test before polish and deployment.
+The prototype does not implement customer feedback, service tickets, payment, course registration, production SSO, HR integration, certificates, branch operations, or formal employee scoring.
