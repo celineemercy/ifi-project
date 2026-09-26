@@ -4,98 +4,120 @@ import {
   BookOpenCheck,
   ClipboardCheck,
   MessagesSquare,
-  TrendingUp,
+  Percent,
 } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { requireRole } from "@/lib/auth/session";
-
-const journey = [
-  {
-    label: "Learn",
-    detail: "Build practical service habits through focused microlearning.",
-    icon: BookOpenCheck,
-    color: "bg-brand-green",
-  },
-  {
-    label: "Practice",
-    detail: "Respond to realistic IFI visitor situations in a safe space.",
-    icon: MessagesSquare,
-    color: "bg-ifi-blue",
-  },
-  {
-    label: "Assess",
-    detail: "Receive structured learning feedback after each simulation.",
-    icon: ClipboardCheck,
-    color: "bg-brand-orange",
-  },
-  {
-    label: "Improve",
-    detail: "Follow recommendations and see your development over time.",
-    icon: TrendingUp,
-    color: "bg-brand-red",
-  },
-] as const;
+import {
+  getLearningModulesForUser,
+  getStaffLearningSummary,
+} from "@/services/learning.service";
 
 export default async function StaffHomePage() {
   const session = await requireRole(["STAFF"]);
   const firstName = session.user.name?.split(" ")[0] || "Team Member";
+  const [summary, modules] = await Promise.all([
+    getStaffLearningSummary(session.user.id),
+    getLearningModulesForUser(session.user.id),
+  ]);
+  const nextModule =
+    modules.find((module) => !module.userProgress?.completed) ?? modules[0];
+
+  const metrics = [
+    {
+      label: "Overall progress",
+      value: `${summary.overallProgress}%`,
+      icon: Percent,
+      color: "bg-brand-green",
+    },
+    {
+      label: "Completed modules",
+      value: `${summary.completedModules} / ${summary.totalModules}`,
+      icon: BookOpenCheck,
+      color: "bg-ifi-blue",
+    },
+    {
+      label: "Practice sessions",
+      value: String(summary.completedSessions),
+      icon: MessagesSquare,
+      color: "bg-brand-orange",
+    },
+    {
+      label: "Average skill score",
+      value: `${summary.averageScore}%`,
+      icon: ClipboardCheck,
+      color: "bg-brand-red",
+    },
+  ] as const;
 
   return (
     <main className="p-5 sm:p-8 lg:p-10">
       <PageHeader
         eyebrow="Your learning journey"
         title={`Bonjour, ${firstName}.`}
-        description="Great service builds stronger connections. This foundation is ready for database-backed learning progress in Phase 4."
+        description="Great service builds stronger connections. Continue learning, practise realistic situations, and turn feedback into your next improvement."
       />
 
       <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {journey.map((step, index) => {
-          const Icon = step.icon;
+        {metrics.map((metric) => {
+          const Icon = metric.icon;
           return (
-            <Card key={step.label}>
+            <Card key={metric.label}>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
                   <span
-                    className={`grid size-11 place-items-center rounded-xl text-white ${step.color}`}
+                    className={`grid size-11 place-items-center rounded-xl text-white ${metric.color}`}
                   >
                     <Icon className="size-5" />
                   </span>
-                  <span className="text-muted-foreground text-sm font-semibold">
-                    0{index + 1}
-                  </span>
+                  <span className="text-3xl font-bold">{metric.value}</span>
                 </div>
-                <h2 className="mt-7 text-xl font-bold">{step.label}</h2>
-                <p className="text-muted-foreground mt-2 leading-6">
-                  {step.detail}
-                </p>
+                <h2 className="text-muted-foreground mt-5 font-semibold">
+                  {metric.label}
+                </h2>
               </CardContent>
             </Card>
           );
         })}
       </section>
 
-      <Card className="mt-6 overflow-hidden">
-        <CardContent className="grid gap-8 p-7 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
-            <p className="text-brand-green text-sm font-semibold tracking-[0.14em] uppercase">
-              Next in the build
-            </p>
-            <h2 className="mt-2 text-2xl font-bold">Communication & Empathy</h2>
-            <p className="text-muted-foreground mt-2 max-w-2xl leading-7">
-              The primary learning module will connect active-listening lessons,
-              a short case, a three-question quiz, and progress updates.
-            </p>
-          </div>
-          <Button asChild size="lg">
-            <Link href="/learning">
-              View learning foundation <ArrowRight className="size-4" />
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
+      {nextModule ? (
+        <Card className="mt-6 overflow-hidden">
+          <CardContent className="grid gap-8 p-7 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="text-brand-green text-sm font-semibold tracking-[0.14em] uppercase">
+                Continue learning
+              </p>
+              <h2 className="mt-2 text-2xl font-bold">{nextModule.title}</h2>
+              <p className="text-muted-foreground mt-2 max-w-2xl leading-7">
+                {nextModule.description}
+              </p>
+              <div className="mt-4 max-w-md">
+                <div className="mb-2 flex justify-between text-sm font-semibold">
+                  <span>Module progress</span>
+                  <span>{nextModule.userProgress?.progress ?? 0}%</span>
+                </div>
+                <div className="bg-muted h-2 overflow-hidden rounded-full">
+                  <div
+                    className="bg-brand-green h-full rounded-full"
+                    style={{
+                      width: `${nextModule.userProgress?.progress ?? 0}%`,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+            <Button asChild size="lg">
+              <Link href={`/learning/${nextModule.slug}`}>
+                Continue module <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      ) : null}
     </main>
   );
 }

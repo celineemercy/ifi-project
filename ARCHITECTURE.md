@@ -52,6 +52,12 @@ docs/             Product, demo, brand, and engineering records
 
 Pages should not contain direct database mutations. Services own domain rules and transactions. Protected page entry points verify the session and role on the server; navigation visibility is only a usability layer.
 
+## Implemented authentication and learning flow
+
+Credentials authentication normalizes the submitted email, loads the user through Prisma, and verifies the stored bcrypt password hash. The signed token carries the database user ID and role for an eight-hour session. Every protected page then enforces its permitted role on the server.
+
+Learning reads are handled by the learning service and rendered with Server Components. Quiz answers are submitted through a validated Server Action. A perfect result upserts the employee's module progress to 100%; an already completed module is returned unchanged so repeated submissions cannot create duplicate completion state. Revalidated staff pages then read the persisted aggregate progress from PostgreSQL.
+
 ## Route topology
 
 ### Staff

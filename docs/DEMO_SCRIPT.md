@@ -3,9 +3,9 @@
 The complete prototype should support this exact story without broken screens.
 
 1. Sign in as `alex.staff@ifi.demo` with `demo123`.
-2. Confirm the home screen greets Alex and shows seeded learning progress.
+2. Confirm the home screen greets Alex and shows 68% progress, 3/5 completed modules, seven practice sessions, and an 84% average score.
 3. Open **Communication & Empathy**.
-4. Read and complete a short lesson.
+4. Read the lessons, answer the three-question quiz, and confirm progress updates to 80% with 4/5 completed modules.
 5. Open **Practice Simulator** and select Courses.
 6. Select **Course Registration Confusion**.
 7. Respond to the visitor for approximately 3–5 exchanges.

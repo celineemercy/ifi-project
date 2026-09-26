@@ -34,8 +34,8 @@ export default function LoginPage() {
             <LoginForm />
           </Suspense>
           <p className="text-muted-foreground mt-6 text-xs leading-5">
-            These accounts contain demonstration data only. Database-backed
-            users will replace them in Phase 3.
+            These accounts contain demonstration data only. Credentials are
+            verified against the prototype PostgreSQL database.
           </p>
         </div>
       </section>

@@ -675,7 +675,7 @@ const scenarios = [
 ] as const;
 
 const progressByUser: Record<string, readonly number[]> = {
-  "demo-staff": [100, 100, 100, 25, 15],
+  "demo-staff": [100, 100, 40, 0, 100],
   "staff-ayu": [100, 100, 100, 60, 10],
   "staff-bima": [100, 100, 100, 100, 45],
   "staff-citra": [100, 100, 100, 50, 20],

@@ -30,19 +30,19 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 
 ## Phase 3 — Authentication
 
-- [ ] Move credential lookup to PostgreSQL
-- [ ] Retain the three documented demo accounts
-- [ ] Verify staff, manager, and admin boundaries
-- [ ] Verify incorrect credentials and session expiration behavior
+- [x] Move credential lookup to PostgreSQL
+- [x] Retain the three documented demo accounts
+- [x] Verify staff, manager, and admin boundaries
+- [x] Verify incorrect credentials and session expiration configuration
 
 ## Phase 4 — Learning Hub
 
-- [ ] Build database-backed staff home
-- [ ] Build module listing and lesson view
-- [ ] Fully implement Communication & Empathy
-- [ ] Add three-question quiz
-- [ ] Make lesson/module completion idempotent
-- [ ] Update staff progress
+- [x] Build database-backed staff home
+- [x] Build module listing and lesson view
+- [x] Fully implement Communication & Empathy
+- [x] Add three-question quiz
+- [x] Make lesson/module completion idempotent
+- [x] Update staff progress
 
 ## Phase 5 — Practice Simulator
 

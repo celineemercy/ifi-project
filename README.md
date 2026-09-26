@@ -10,19 +10,21 @@ This is a university prototype, not an IFI operational system or a formal employ
 
 ## Current status
 
-Phases 1 and 2 — Foundation Realignment and Database — are implemented:
+Phases 1–4 — Foundation, Database, Authentication, and Learning Hub — are implemented:
 
 - Next.js App Router with strict TypeScript
 - Tailwind CSS and shadcn/ui-compatible components
 - Titillium Web with Pradita-led brand tokens
 - Responsive, role-specific workspace navigation
-- Working prototype authentication for Staff, Manager, and Super Admin
-- Server-side page-entry authorization checks
+- PostgreSQL-backed credentials authentication for Staff, Manager, and Super Admin
+- Server-side page-entry authorization checks with role-specific redirects
 - Complete route foundation for learning, practice, assessment, progress, management, and administration
 - Docker Compose PostgreSQL configuration
 - Prisma 7 domain schema, migration, and verified deterministic seed data
 - 12 fictional staff profiles, five learning modules, five service scenarios, and 20 completed simulations
 - Alex's required 68% progress, 3/5 completion, seven sessions, and 84% average score
+- Database-backed staff home, learning catalogue, module lessons, and progress dashboard
+- A functional three-question module quiz with idempotent completion and persisted progress
 - ESLint, Prettier, type-check, and production-build scripts
 
 The learning material and service scenarios are source-informed prototype content, not official IFI policy or training material. See [Content sources and status](./docs/CONTENT_SOURCES.md).
@@ -68,7 +70,7 @@ All prototype accounts use the prototype-only password `demo123`.
 | Manager     | `manager@ifi.demo`    | `/manager`         |
 | Super Admin | `admin@ifi.demo`      | `/admin/scenarios` |
 
-The same identities are already present in the Phase 2 database. Phase 3 moves credential lookup from the temporary configuration file to PostgreSQL.
+These identities are stored in PostgreSQL and verified through the same database-backed authentication flow used by the application.
 
 `npm run db:seed` resets the dedicated prototype data and recreates the verified demonstration dataset.
 

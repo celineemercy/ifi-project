@@ -3,7 +3,8 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
-import { demoAccounts } from "@/config/demo-accounts";
+import type { AppRole } from "@/config/demo-accounts";
+import { prisma } from "@/lib/db/client";
 
 const credentialsSchema = z.object({
   email: z.email().transform((value) => value.toLowerCase()),
@@ -12,7 +13,8 @@ const credentialsSchema = z.object({
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 8 * 60 * 60, updateAge: 60 * 60 },
+  jwt: { maxAge: 8 * 60 * 60 },
   pages: { signIn: "/login" },
   providers: [
     CredentialsProvider({
@@ -25,9 +27,17 @@ export const authOptions: NextAuthOptions = {
         const parsed = credentialsSchema.safeParse(credentials);
         if (!parsed.success) return null;
 
-        const account = demoAccounts.find(
-          (candidate) => candidate.email === parsed.data.email,
-        );
+        const account = await prisma.user.findUnique({
+          where: { email: parsed.data.email },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            passwordHash: true,
+            role: true,
+            department: true,
+          },
+        });
         if (!account) return null;
 
         const validPassword = await compare(
@@ -40,7 +50,7 @@ export const authOptions: NextAuthOptions = {
           id: account.id,
           name: account.name,
           email: account.email,
-          role: account.role,
+          role: account.role as AppRole,
           department: account.department,
         };
       },
