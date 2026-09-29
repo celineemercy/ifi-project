@@ -17,7 +17,6 @@ Next.js App Router
 ├── Server Components for reads
 ├── Client Components for chat interactions
 ├── Server Actions for controlled mutations
-├── Route handlers for simulation messages
 ├── Zod validation
 └── Page-entry authorization checks
         │
@@ -25,7 +24,6 @@ Next.js App Router
 Application services
 ├── Learning service
 ├── Simulation service
-├── Assessment service
 └── Analytics service
         │
         └── Deterministic simulation and assessment engine

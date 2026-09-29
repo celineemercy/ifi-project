@@ -46,39 +46,39 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 
 ## Phase 5 — Practice Simulator
 
-- [ ] Build service-area and scenario selection
-- [ ] Build the professional chat interface
-- [ ] Implement deterministic visitor behavior
-- [ ] Store sequenced conversation messages
-- [ ] Support safe end/abandon behavior
+- [x] Build service-area and scenario selection
+- [x] Build the professional chat interface
+- [x] Implement deterministic visitor behavior
+- [x] Store sequenced conversation messages
+- [x] Support safe end/abandon behavior
 
 ## Phase 6 — Assessment
 
-- [ ] Define and validate the assessment schema
-- [ ] Implement deterministic assessment scores
-- [ ] Make assessment creation idempotent
-- [ ] Show skill scores, strength, improvement, and recommendation
-- [ ] Show the learning-and-development disclaimer
+- [x] Define and validate the assessment schema
+- [x] Implement deterministic assessment scores
+- [x] Make assessment creation idempotent
+- [x] Show skill scores, strength, improvement, and recommendation
+- [x] Show the learning-and-development disclaimer
 
 ## Phase 7 — Manager Dashboard
 
-- [ ] Aggregate team participation and completion
-- [ ] Aggregate skill averages
-- [ ] Add database-backed charts
-- [ ] Label recommendations Suggested Training Focus
-- [ ] Avoid individual formal-performance framing
+- [x] Aggregate team participation and completion
+- [x] Aggregate skill averages
+- [x] Add database-backed charts
+- [x] Label recommendations Suggested Training Focus
+- [x] Avoid individual formal-performance framing
 
 ## Phase 8 — Admin Scenario Manager
 
-- [ ] List and filter scenarios
-- [ ] Create and edit scenarios
-- [ ] Activate and deactivate scenarios
-- [ ] Validate mutations and enforce admin authorization
+- [x] List and filter scenarios
+- [x] Create and edit scenarios
+- [x] Activate and deactivate scenarios
+- [x] Validate mutations and enforce admin authorization
 
 ## Phase 9 — Demo Polish
 
 - [ ] Complete responsive and accessibility review
-- [ ] Add loading, empty, and error states
+- [x] Add loading, empty, and error states
 - [ ] Add critical Playwright demo journey
 - [ ] Rehearse the deterministic simulation journey
 - [ ] Document optional Vercel deployment

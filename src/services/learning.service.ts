@@ -72,7 +72,9 @@ export const getStaffLearningSummary = cache(async (userId: string) => {
     }),
     prisma.simulationSession.findMany({
       where: { userId, status: SimulationStatus.COMPLETED },
-      include: { assessment: true },
+      include: {
+        assessment: { include: { recommendedModule: true } },
+      },
       orderBy: { completedAt: "desc" },
     }),
   ]);
@@ -136,6 +138,8 @@ export const getStaffLearningSummary = cache(async (userId: string) => {
     completedSessions: sessions.length,
     averageScore,
     skillAverages,
+    recommendedModule:
+      scoredSessions[0]?.assessment?.recommendedModule ?? null,
     moduleProgress: progress,
   };
 });

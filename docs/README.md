@@ -10,7 +10,7 @@ This is a university prototype, not an IFI operational system or a formal employ
 
 ## Current status
 
-Phases 1–4 — Foundation, Database, Authentication, and Learning Hub — are implemented:
+Phases 1–8 — Foundation through the admin scenario manager — are implemented:
 
 - Next.js App Router with strict TypeScript
 - Tailwind CSS and shared shadcn/ui components
@@ -25,6 +25,11 @@ Phases 1–4 — Foundation, Database, Authentication, and Learning Hub — are 
 - Alex's required 68% progress, 3/5 completion, seven sessions, and 84% average score
 - Database-backed staff home, learning catalogue, module lessons, and progress dashboard
 - A functional three-question module quiz with idempotent completion and persisted progress
+- Deterministic visitor roleplay with stored, sequenced conversation messages
+- Idempotent developmental assessments with five skill scores and module recommendations
+- Database-backed manager participation, completion, and skill analytics
+- Admin scenario creation, editing, filtering, activation, and deactivation
+- Shared loading, empty, and recoverable error states
 - ESLint, Prettier, type-check, and production-build scripts
 
 The learning material and service scenarios are source-informed prototype content, not official IFI policy or training material. See [Content sources and status](./CONTENT_SOURCES.md).

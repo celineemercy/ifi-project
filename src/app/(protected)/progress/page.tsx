@@ -129,14 +129,16 @@ export default async function ProgressPage() {
                 {practiceSkill?.label ?? "Complete a simulation"}
               </h2>
               <p className="text-muted-foreground mt-2 leading-6">
-                Recommended next learning: Handling Difficult Situations with
-                Grace.
+                Recommended next learning: {summary.recommendedModule?.title ??
+                  "Complete another practice assessment"}.
               </p>
-              <Button asChild variant="outline" className="mt-5">
-                <Link href="/learning/difficult-situations">
-                  Open recommendation <ArrowRight className="size-4" />
-                </Link>
-              </Button>
+              {summary.recommendedModule ? (
+                <Button asChild variant="outline" className="mt-5">
+                  <Link href={`/learning/${summary.recommendedModule.slug}`}>
+                    Open recommendation <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+              ) : null}
             </CardContent>
           </Card>
         </div>
