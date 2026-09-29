@@ -5,7 +5,17 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { demoPassword } from "@/config/demo-accounts";
 
 const demoEmails = [
@@ -52,42 +62,42 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-      <label className="block">
-        <span className="mb-2 block text-sm font-semibold">Demo account</span>
-        <select
+      <div className="grid gap-2">
+        <Label htmlFor="demo-account">Demo account</Label>
+        <Select
           value={email}
-          onChange={(event) =>
-            setEmail(event.target.value as (typeof demoEmails)[number])
+          onValueChange={(value) =>
+            setEmail(value as (typeof demoEmails)[number])
           }
-          className="border-border focus:border-brand-green focus:ring-brand-green/15 h-11 w-full rounded-lg border bg-white px-3 outline-none focus:ring-2"
         >
-          <option value={demoEmails[0]}>Alex — Staff</option>
-          <option value={demoEmails[1]}>Manager</option>
-          <option value={demoEmails[2]}>Super Admin</option>
-        </select>
-        <span className="text-muted-foreground mt-1.5 block text-xs">
-          {email}
-        </span>
-      </label>
+          <SelectTrigger id="demo-account" className="h-11">
+            <SelectValue placeholder="Choose a demo account" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={demoEmails[0]}>Alex - Staff</SelectItem>
+            <SelectItem value={demoEmails[1]}>Manager</SelectItem>
+            <SelectItem value={demoEmails[2]}>Super Admin</SelectItem>
+          </SelectContent>
+        </Select>
+        <p className="text-muted-foreground text-xs">{email}</p>
+      </div>
 
-      <label className="block">
-        <span className="mb-2 block text-sm font-semibold">Password</span>
-        <input
+      <div className="grid gap-2">
+        <Label htmlFor="password">Password</Label>
+        <Input
+          id="password"
           type="password"
           autoComplete="current-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="border-border focus:border-brand-green focus:ring-brand-green/15 h-11 w-full rounded-lg border bg-white px-3 outline-none focus:ring-2"
+          className="h-11"
         />
-      </label>
+      </div>
 
       {error && (
-        <p
-          role="alert"
-          className="bg-brand-red/8 text-brand-red rounded-lg px-3 py-2 text-sm"
-        >
-          {error}
-        </p>
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
       <Button type="submit" className="w-full" size="lg" disabled={isPending}>

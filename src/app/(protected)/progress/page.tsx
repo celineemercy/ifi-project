@@ -4,6 +4,7 @@ import { ArrowRight, Award, Target } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { requireRole } from "@/lib/auth/session";
 import { getStaffLearningSummary } from "@/services/learning.service";
 
@@ -84,12 +85,11 @@ export default async function ProgressPage() {
                       <span>{skill.label}</span>
                       <span>{skill.value}%</span>
                     </div>
-                    <div className="bg-muted h-2.5 overflow-hidden rounded-full">
-                      <div
-                        className="bg-ifi-blue h-full rounded-full"
-                        style={{ width: `${skill.value}%` }}
-                      />
-                    </div>
+                    <Progress
+                      value={skill.value}
+                      className="h-2.5"
+                      indicatorClassName="bg-ifi-blue"
+                    />
                   </div>
                 ))}
               </div>
@@ -154,12 +154,7 @@ export default async function ProgressPage() {
                   <span>{item.module.shortTitle}</span>
                   <span>{item.progress}%</span>
                 </div>
-                <div className="bg-muted h-2 overflow-hidden rounded-full">
-                  <div
-                    className="bg-brand-green h-full rounded-full"
-                    style={{ width: `${item.progress}%` }}
-                  />
-                </div>
+                <Progress value={item.progress} />
               </div>
             ))}
           </div>

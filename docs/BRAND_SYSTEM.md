@@ -5,7 +5,7 @@
 - Pradita deep green `#006333` is the primary application color.
 - Supporting colors are red `#EC1C24`, orange `#F56E21`, and yellow `#F8D301`.
 - Surfaces use white and the light background `#F5F5F5`.
-- Titillium Web is the primary application typeface.
+- Inter is the primary application typeface.
 - The product should feel professional, modern, academic, international, welcoming, clean, and minimal.
 
 ## Observed IFI patterns
@@ -25,7 +25,7 @@ IFI's official public website and published artwork use a strong French blue, hi
 
 ## Typography
 
-- Primary family: Titillium Web
+- Primary family: Inter
 - Headings: weight 600–700
 - Body: weight 400 with comfortable line height
 - Labels: weight 600 with restrained uppercase tracking
@@ -48,8 +48,8 @@ IFI's official public website and published artwork use a strong French blue, hi
     },
     {
       "key": "typography",
-      "value": "Titillium Web",
-      "rationale": "Explicit user instruction for the product interface.",
+      "value": "Inter",
+      "rationale": "Current user instruction for consistent interface typography.",
       "priority": 2
     },
     {
@@ -61,7 +61,7 @@ IFI's official public website and published artwork use a strong French blue, hi
   ],
   "evidence": [
     "User-supplied IFI Savoir-Faire Hub implementation plan",
-    "User-confirmed Pradita palette and Titillium Web preference",
+    "User-confirmed Pradita palette and Inter preference",
     "Official IFI Indonesia website and supplied public logo artwork"
   ],
   "confidence": 0.9,

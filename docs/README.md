@@ -13,8 +13,8 @@ This is a university prototype, not an IFI operational system or a formal employ
 Phases 1–4 — Foundation, Database, Authentication, and Learning Hub — are implemented:
 
 - Next.js App Router with strict TypeScript
-- Tailwind CSS and shadcn/ui-compatible components
-- Titillium Web with Pradita-led brand tokens
+- Tailwind CSS and shared shadcn/ui components
+- Inter with Pradita-led brand tokens
 - Responsive, role-specific workspace navigation
 - PostgreSQL-backed credentials authentication for Staff, Manager, and Super Admin
 - Server-side page-entry authorization checks with role-specific redirects

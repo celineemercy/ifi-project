@@ -10,6 +10,7 @@ import {
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { requireRole } from "@/lib/auth/session";
 import {
   getLearningModulesForUser,
@@ -100,14 +101,7 @@ export default async function StaffHomePage() {
                   <span>Module progress</span>
                   <span>{nextModule.userProgress?.progress ?? 0}%</span>
                 </div>
-                <div className="bg-muted h-2 overflow-hidden rounded-full">
-                  <div
-                    className="bg-brand-green h-full rounded-full"
-                    style={{
-                      width: `${nextModule.userProgress?.progress ?? 0}%`,
-                    }}
-                  />
-                </div>
+                <Progress value={nextModule.userProgress?.progress ?? 0} />
               </div>
             </div>
             <Button asChild size="lg">

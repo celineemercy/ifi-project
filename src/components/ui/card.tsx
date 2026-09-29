@@ -6,7 +6,7 @@ export function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "border-border text-card-foreground rounded-2xl border bg-white shadow-[0_12px_36px_rgba(15,35,25,0.05)]",
+        "bg-card text-card-foreground rounded-lg border shadow-[0_12px_36px_rgba(15,35,25,0.05)]",
         className,
       )}
       {...props}
@@ -18,15 +18,20 @@ export function CardHeader({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  return <div className={cn("p-6 pb-3", className)} {...props} />;
+  return (
+    <div
+      className={cn(
+        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 p-6 pb-3",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 export function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
   return (
-    <h3
-      className={cn("text-lg font-semibold tracking-tight", className)}
-      {...props}
-    />
+    <h3 className={cn("leading-none font-semibold", className)} {...props} />
   );
 }
 
@@ -44,4 +49,13 @@ export function CardContent({
   ...props
 }: React.ComponentProps<"div">) {
   return <div className={cn("p-6 pt-3", className)} {...props} />;
+}
+
+export function CardFooter({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div className={cn("flex items-center p-6 pt-3", className)} {...props} />
+  );
 }

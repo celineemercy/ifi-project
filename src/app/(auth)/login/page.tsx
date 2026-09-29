@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 import { LoginForm } from "@/components/auth/login-form";
 import { ProductMark } from "@/components/brand/product-mark";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const metadata: Metadata = { title: "Sign in" };
 
@@ -26,11 +27,7 @@ export default function LoginPage() {
             Sign in with a prototype account to learn, practice, assess, and
             improve.
           </p>
-          <Suspense
-            fallback={
-              <div className="bg-muted mt-8 h-72 animate-pulse rounded-xl" />
-            }
-          >
+          <Suspense fallback={<Skeleton className="mt-8 h-72" />}>
             <LoginForm />
           </Suspense>
           <p className="text-muted-foreground mt-6 text-xs leading-5">

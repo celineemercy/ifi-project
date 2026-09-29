@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import "@fontsource/titillium-web/400.css";
-import "@fontsource/titillium-web/600.css";
-import "@fontsource/titillium-web/700.css";
-import { Toaster } from "sonner";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
 
+import { Toaster } from "@/components/ui/sonner";
 import { brand } from "@/config/brand";
 
 import "./globals.css";
@@ -30,7 +31,7 @@ export default function RootLayout({
     >
       <body className="bg-background text-foreground min-h-full antialiased">
         {children}
-        <Toaster richColors position="top-right" />
+        <Toaster />
       </body>
     </html>
   );

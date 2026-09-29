@@ -2,8 +2,10 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, CheckCircle2, Clock3 } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { requireRole } from "@/lib/auth/session";
 import { getLearningModulesForUser } from "@/services/learning.service";
 
@@ -32,9 +34,9 @@ export default async function LearningPage() {
                     <span className="bg-brand-green-light text-brand-green grid size-11 shrink-0 place-items-center rounded-xl">
                       <BookOpen className="size-5" />
                     </span>
-                    <span className="text-muted-foreground text-sm font-semibold">
+                    <Badge variant="secondary">
                       MODULE {String(module.order).padStart(2, "0")}
-                    </span>
+                    </Badge>
                   </div>
                   <h2 className="mt-5 text-2xl font-bold">{module.title}</h2>
                   <p className="text-muted-foreground mt-2 leading-7">
@@ -46,9 +48,9 @@ export default async function LearningPage() {
                     </span>
                     <span>{module.lessons.length} lessons + quiz</span>
                     {completed ? (
-                      <span className="text-brand-green inline-flex items-center gap-2 font-semibold">
+                      <Badge variant="success">
                         <CheckCircle2 className="size-4" /> Completed
-                      </span>
+                      </Badge>
                     ) : null}
                   </div>
                   <div className="mt-5">
@@ -56,12 +58,7 @@ export default async function LearningPage() {
                       <span>Progress</span>
                       <span>{progress}%</span>
                     </div>
-                    <div className="bg-muted h-2 overflow-hidden rounded-full">
-                      <div
-                        className="bg-brand-green h-full rounded-full transition-[width]"
-                        style={{ width: `${progress}%` }}
-                      />
-                    </div>
+                    <Progress value={progress} />
                   </div>
                 </div>
                 <div className="border-border flex items-center justify-between border-t px-6 py-4 sm:px-7">

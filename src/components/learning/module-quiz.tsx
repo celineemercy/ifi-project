@@ -5,8 +5,12 @@ import { CheckCircle2, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { submitModuleQuiz } from "@/app/(protected)/learning/[moduleId]/actions";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { initialQuizState } from "@/components/learning/quiz-state";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { LearningQuizQuestion } from "@/services/learning.service";
 
 type ModuleQuizProps = {
@@ -43,23 +47,22 @@ export function ModuleQuiz({
           <legend className="font-semibold">
             {questionIndex + 1}. {question.question}
           </legend>
-          <div className="grid gap-2">
+          <RadioGroup name={`answer-${question.id}`} required>
             {question.options.map((option, optionIndex) => (
-              <label
+              <Label
                 key={option}
-                className="border-border hover:border-brand-green/40 hover:bg-brand-green-light/40 flex cursor-pointer items-start gap-3 rounded-xl border bg-white px-4 py-3 transition-colors"
+                htmlFor={`${question.id}-${optionIndex}`}
+                className="border-border bg-card hover:border-primary/40 hover:bg-accent has-data-[state=checked]:border-primary has-data-[state=checked]:bg-accent flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 font-normal transition-colors"
               >
-                <input
-                  className="accent-brand-green mt-1 size-4"
-                  type="radio"
-                  name={`answer-${question.id}`}
-                  value={optionIndex}
-                  required
+                <RadioGroupItem
+                  id={`${question.id}-${optionIndex}`}
+                  value={String(optionIndex)}
+                  className="mt-0.5"
                 />
                 <span>{option}</span>
-              </label>
+              </Label>
             ))}
-          </div>
+          </RadioGroup>
         </fieldset>
       ))}
 
@@ -72,37 +75,37 @@ export function ModuleQuiz({
               : "Complete module"}
         </Button>
         {alreadyCompleted && state.status === "idle" ? (
-          <span className="text-brand-green inline-flex items-center gap-2 font-semibold">
+          <Badge variant="success">
             <CheckCircle2 className="size-5" /> Already completed
-          </span>
+          </Badge>
         ) : null}
       </div>
 
       {state.message ? (
-        <div
+        <Alert
           aria-live="polite"
-          className={`rounded-xl border p-4 ${
+          variant={
             state.status === "passed"
-              ? "border-brand-green/25 bg-brand-green-light text-brand-green-dark"
+              ? "success"
               : state.status === "retry"
-                ? "border-brand-orange/30 bg-orange-50 text-orange-950"
-                : "border-brand-red/25 bg-red-50 text-red-900"
-          }`}
+                ? "warning"
+                : "destructive"
+          }
         >
-          <p className="font-semibold">
+          <AlertTitle>
             {state.score === null
               ? state.message
               : `${state.score}/${state.total} correct`}
-          </p>
+          </AlertTitle>
           {state.score !== null ? (
-            <p className="mt-1 text-sm">{state.message}</p>
+            <AlertDescription>{state.message}</AlertDescription>
           ) : null}
           {state.status === "retry" ? (
-            <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold">
+            <AlertDescription className="mt-2 inline-flex items-center gap-2 font-semibold">
               <RotateCcw className="size-4" /> You can resubmit when ready.
-            </p>
+            </AlertDescription>
           ) : null}
-        </div>
+        </Alert>
       ) : null}
     </form>
   );

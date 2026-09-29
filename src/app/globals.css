@@ -1,12 +1,27 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
   --background: #f5f5f5;
   --foreground: #17211b;
+  --card: #ffffff;
   --card-foreground: #17211b;
+  --popover: #ffffff;
+  --popover-foreground: #17211b;
+  --primary: #006333;
+  --primary-foreground: #ffffff;
+  --secondary: #edf1ee;
+  --secondary-foreground: #17211b;
   --muted: #edf1ee;
   --muted-foreground: #66736b;
+  --accent: #e8f3ed;
+  --accent-foreground: #004d28;
+  --destructive: #ec1c24;
+  --destructive-foreground: #ffffff;
   --border: #dfe6e1;
+  --input: #dfe6e1;
+  --ring: #006333;
+  --radius: 0.5rem;
   --brand-green: #006333;
   --brand-green-dark: #004d28;
   --brand-green-light: #e8f3ed;
@@ -20,10 +35,23 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-brand-green: var(--brand-green);
   --color-brand-green-dark: var(--brand-green-dark);
   --color-brand-green-light: var(--brand-green-light);
@@ -32,7 +60,7 @@
   --color-brand-amber: var(--brand-amber);
   --color-brand-yellow: var(--brand-yellow);
   --color-ifi-blue: var(--ifi-blue);
-  --font-sans: "Titillium Web", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
@@ -44,7 +72,7 @@ html {
 }
 
 body {
-  font-family: "Titillium Web", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 ::selection {

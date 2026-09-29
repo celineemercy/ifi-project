@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 
 import { ModuleQuiz } from "@/components/learning/module-quiz";
 import { PageHeader } from "@/components/layout/page-header";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { requireRole } from "@/lib/auth/session";
@@ -47,26 +49,25 @@ export default async function LearningModulePage({
           {learningModule.lessons.length} short lessons
         </span>
         {completed ? (
-          <span className="text-brand-green inline-flex items-center gap-2 font-semibold">
+          <Badge variant="success">
             <CheckCircle2 className="size-4" /> Completed
-          </span>
+          </Badge>
         ) : (
-          <span className="rounded-full bg-orange-100 px-3 py-1 font-semibold text-orange-900">
+          <Badge variant="warning">
             {learningModule.userProgress?.progress ?? 0}% complete
-          </span>
+          </Badge>
         )}
       </div>
 
-      <Card className="border-brand-green/20 bg-brand-green-light/40 mt-8">
-        <CardContent className="p-6 sm:p-7">
-          <p className="text-brand-green text-sm font-semibold tracking-[0.13em] uppercase">
-            Learning objective
-          </p>
-          <p className="mt-2 text-lg leading-7">
-            {learningModule.learningObjective}
-          </p>
-        </CardContent>
-      </Card>
+      <Alert variant="success" className="mt-8 p-6 sm:p-7">
+        <Lightbulb />
+        <AlertTitle className="tracking-[0.13em] uppercase">
+          Learning objective
+        </AlertTitle>
+        <AlertDescription className="text-foreground text-lg">
+          {learningModule.learningObjective}
+        </AlertDescription>
+      </Alert>
 
       <section className="mt-8 space-y-5" aria-labelledby="lessons-heading">
         <div>
@@ -88,23 +89,18 @@ export default async function LearningModulePage({
                   </p>
                   <h3 className="mt-1 text-xl font-bold">{lesson.title}</h3>
                 </div>
-                <span className="text-muted-foreground text-sm">
-                  {lesson.durationMinutes} min
-                </span>
+                <Badge variant="outline">{lesson.durationMinutes} min</Badge>
               </div>
               <p className="mt-3 font-semibold">{lesson.summary}</p>
               <p className="text-muted-foreground mt-3 leading-7">
                 {lesson.content}
               </p>
               {lesson.example ? (
-                <div className="border-brand-orange/25 mt-5 rounded-xl border bg-orange-50 p-4">
-                  <p className="inline-flex items-center gap-2 font-semibold text-orange-950">
-                    <Lightbulb className="size-4" /> Service example
-                  </p>
-                  <p className="mt-2 leading-7 text-orange-950/80">
-                    {lesson.example}
-                  </p>
-                </div>
+                <Alert variant="warning" className="mt-5">
+                  <Lightbulb />
+                  <AlertTitle>Service example</AlertTitle>
+                  <AlertDescription>{lesson.example}</AlertDescription>
+                </Alert>
               ) : null}
             </CardContent>
           </Card>

@@ -22,6 +22,16 @@ import {
 import { ProductMark } from "@/components/brand/product-mark";
 import { SignOutButton } from "@/components/layout/sign-out-button";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import type { AppRole } from "@/config/demo-accounts";
 import { cn } from "@/lib/utils";
 
@@ -87,45 +97,43 @@ export function AppShell({
       <div className="min-w-0">
         <header className="border-border sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-white/95 px-5 backdrop-blur lg:hidden">
           <ProductMark />
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Open navigation"
-            onClick={() => setMobileOpen(true)}
-          >
-            <Menu className="size-5" />
-          </Button>
-        </header>
-
-        {mobileOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden">
-            <button
-              aria-label="Close navigation overlay"
-              className="absolute inset-0 bg-black/45"
-              onClick={() => setMobileOpen(false)}
-            />
-            <aside className="relative flex h-full w-[min(88vw,330px)] flex-col bg-[#053b23] p-5 text-white shadow-2xl">
-              <div className="flex items-center justify-between px-2 py-3">
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Open navigation">
+                <Menu className="size-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="left"
+              showCloseButton={false}
+              className="w-[min(88vw,330px)] gap-0 border-0 bg-[#053b23] p-5 text-white sm:max-w-[330px]"
+            >
+              <SheetHeader className="flex-row items-center justify-between px-2 py-3">
+                <SheetTitle className="sr-only">Primary navigation</SheetTitle>
+                <SheetDescription className="sr-only">
+                  Navigate the IFI Savoir-Faire Hub workspace.
+                </SheetDescription>
                 <ProductMark inverse />
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="Close navigation"
-                  className="text-white hover:bg-white/10 hover:text-white"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <X className="size-5" />
-                </Button>
-              </div>
+                <SheetClose asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label="Close navigation"
+                    className="text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <X className="size-5" />
+                  </Button>
+                </SheetClose>
+              </SheetHeader>
               <NavItems
                 items={navigation}
                 pathname={pathname}
                 onNavigate={() => setMobileOpen(false)}
               />
               <UserFooter user={user} />
-            </aside>
-          </div>
-        )}
+            </SheetContent>
+          </Sheet>
+        </header>
 
         <div className="min-h-screen">{children}</div>
       </div>
@@ -149,20 +157,22 @@ function NavItems({
         const active =
           pathname === item.href || pathname.startsWith(`${item.href}/`);
         return (
-          <Link
+          <Button
             key={item.href}
-            href={item.href}
-            onClick={onNavigate}
+            asChild
+            variant="ghost"
             className={cn(
-              "flex h-11 items-center gap-3 rounded-xl px-3 text-sm font-semibold transition-colors",
+              "h-11 w-full justify-start px-3",
               active
-                ? "text-brand-green bg-white shadow-sm"
+                ? "text-brand-green hover:text-brand-green bg-white shadow-sm hover:bg-white"
                 : "text-white/70 hover:bg-white/10 hover:text-white",
             )}
           >
-            <Icon className="size-5" />
-            {item.label}
-          </Link>
+            <Link href={item.href} onClick={onNavigate}>
+              <Icon className="size-5" />
+              {item.label}
+            </Link>
+          </Button>
         );
       })}
     </nav>
@@ -171,7 +181,8 @@ function NavItems({
 
 function UserFooter({ user }: { user: ShellUser }) {
   return (
-    <div className="mt-8 border-t border-white/12 pt-4">
+    <div className="mt-8 pt-4">
+      <Separator className="mb-4 bg-white/12" />
       <div className="mb-2 px-3">
         <p className="truncate text-sm font-semibold">{user.name}</p>
         <p className="mt-0.5 truncate text-xs text-white/50">
