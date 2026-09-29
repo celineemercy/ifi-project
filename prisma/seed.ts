@@ -1159,6 +1159,18 @@ async function verifySeed() {
 }
 
 async function main() {
+  if (process.argv.includes("--if-empty")) {
+    const counts = await Promise.all([
+      prisma.user.count(),
+      prisma.learningModule.count(),
+      prisma.scenario.count(),
+    ]);
+    if (counts.some((count) => count > 0)) {
+      console.info("Existing data found; skipping demo seed.");
+      return;
+    }
+  }
+
   await resetPrototypeData();
   await seedUsers();
   await seedLearning();

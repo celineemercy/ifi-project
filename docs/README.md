@@ -27,7 +27,7 @@ Phases 1–4 — Foundation, Database, Authentication, and Learning Hub — are 
 - A functional three-question module quiz with idempotent completion and persisted progress
 - ESLint, Prettier, type-check, and production-build scripts
 
-The learning material and service scenarios are source-informed prototype content, not official IFI policy or training material. See [Content sources and status](./docs/CONTENT_SOURCES.md).
+The learning material and service scenarios are source-informed prototype content, not official IFI policy or training material. See [Content sources and status](./CONTENT_SOURCES.md).
 
 ## Technology
 
@@ -38,7 +38,39 @@ The learning material and service scenarios are source-informed prototype conten
 - Zod, Recharts, Lucide, and Sonner
 - Docker Compose
 
-## Local setup
+## Run with Docker (demo and handoff)
+
+Install Docker Desktop (Linux containers), then run from the repository root:
+
+```powershell
+docker compose up --build -d --wait
+```
+
+Open [http://localhost:3000](http://localhost:3000). No local Node.js installation
+or `.env.local` file is required. Compose builds the web app, waits for PostgreSQL,
+applies database migrations, and seeds the demo accounts only if the database is
+empty. Existing data and learning progress survive restarts and rebuilds.
+
+Sign in with `alex.staff@ifi.demo` and `demo123` (all demo accounts are below).
+
+```powershell
+docker compose logs -f web
+docker compose down
+docker compose up -d --wait
+```
+
+`down` stops the containers and retains the database volume. Do not add `-v`
+unless you intend to delete the database. The existing `npm run db:seed` command
+still resets demo data when run manually.
+
+The defaults are for local prototype demos. For public hosting, configure real
+secrets and database credentials. Compose reads overrides from shell variables
+or a root `.env` file, not `.env.local`. To use a different port, set both
+`WEB_PORT=3001` and `NEXTAUTH_URL=http://localhost:3001`; `AUTH_SECRET` can also
+be overridden. Containers connect to PostgreSQL at `postgres:5432`; local Node.js
+development continues to use `127.0.0.1:55432`.
+
+## Local setup (Node.js with Docker database)
 
 Requirements:
 
@@ -98,11 +130,11 @@ Never commit `.env.local` or production secrets.
 ## Documentation
 
 - [Architecture](./ARCHITECTURE.md)
-- [Implementation checklist](./docs/IMPLEMENTATION_CHECKLIST.md)
-- [Demo script](./docs/DEMO_SCRIPT.md)
-- [Brand system](./docs/BRAND_SYSTEM.md)
-- [Content sources and status](./docs/CONTENT_SOURCES.md)
-- [Architecture decisions](./docs/DECISIONS.md)
+- [Implementation checklist](./IMPLEMENTATION_CHECKLIST.md)
+- [Demo script](./DEMO_SCRIPT.md)
+- [Brand system](./BRAND_SYSTEM.md)
+- [Content sources and status](./CONTENT_SOURCES.md)
+- [Architecture decisions](./DECISIONS.md)
 
 ## Scope boundary
 

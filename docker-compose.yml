@@ -1,4 +1,25 @@
 services:
+  web:
+    build: .
+    restart: unless-stopped
+    init: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://ifi_pulse:ifi_pulse_dev@postgres:5432/ifi_pulse?schema=public
+      AUTH_SECRET: ${AUTH_SECRET:-ifi-pulse-local-demo-only-change-before-public-hosting}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXT_PUBLIC_APP_NAME: IFI Savoir-Faire Hub
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/auth/providers').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 10
+
   postgres:
     image: postgres:17-alpine
     container_name: ifi-pulse-postgres
