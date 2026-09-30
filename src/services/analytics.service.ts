@@ -3,6 +3,7 @@ import "server-only";
 import { cache } from "react";
 
 import {
+  ModuleAudience,
   ModuleStatus,
   SimulationStatus,
   UserRole,
@@ -23,7 +24,7 @@ export const getManagerAnalytics = cache(async () => {
       },
     }),
     prisma.learningModule.count({
-      where: { status: ModuleStatus.PUBLISHED },
+      where: { status: ModuleStatus.PUBLISHED, audience: ModuleAudience.STAFF },
     }),
   ]);
 

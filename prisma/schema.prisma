@@ -11,11 +11,17 @@ enum UserRole {
   STAFF
   MANAGER
   SUPER_ADMIN
+  MEMBER
 }
 
 enum ModuleStatus {
   DRAFT
   PUBLISHED
+}
+
+enum ModuleAudience {
+  STAFF
+  MEMBER
 }
 
 enum ServiceArea {
@@ -66,17 +72,19 @@ model LearningModule {
   shortTitle             String
   description            String
   learningObjective      String
-  order                  Int              @unique
+  order                  Int
   durationMinutes        Int
   status                 ModuleStatus     @default(DRAFT)
-  quiz                    Json?
-  createdAt               DateTime         @default(now())
-  updatedAt               DateTime         @updatedAt
-  lessons                 Lesson[]
-  progress                ModuleProgress[]
+  audience               ModuleAudience   @default(STAFF)
+  quiz                   Json?
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  lessons                Lesson[]
+  progress               ModuleProgress[]
   recommendedAssessments Assessment[]
 
-  @@index([status, order])
+  @@unique([audience, order])
+  @@index([audience, status, order])
 }
 
 model Lesson {

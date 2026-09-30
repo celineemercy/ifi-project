@@ -3,7 +3,11 @@ import "server-only";
 import { cache } from "react";
 import { z } from "zod";
 
-import { ModuleStatus, SimulationStatus } from "@/generated/prisma/client";
+import {
+  ModuleAudience,
+  ModuleStatus,
+  SimulationStatus,
+} from "@/generated/prisma/client";
 import { prisma } from "@/lib/db/client";
 
 const quizQuestionSchema = z.object({
@@ -23,27 +27,34 @@ export function parseLearningQuiz(value: unknown): LearningQuizQuestion[] {
   return parsed.success ? parsed.data : [];
 }
 
-export const getLearningModulesForUser = cache(async (userId: string) => {
-  const modules = await prisma.learningModule.findMany({
-    where: { status: ModuleStatus.PUBLISHED },
-    orderBy: { order: "asc" },
-    include: {
-      lessons: { orderBy: { order: "asc" } },
-      progress: { where: { userId }, take: 1 },
-    },
-  });
+export const getLearningModulesForUser = cache(
+  async (userId: string, audience: ModuleAudience = ModuleAudience.STAFF) => {
+    const modules = await prisma.learningModule.findMany({
+      where: { status: ModuleStatus.PUBLISHED, audience },
+      orderBy: { order: "asc" },
+      include: {
+        lessons: { orderBy: { order: "asc" } },
+        progress: { where: { userId }, take: 1 },
+      },
+    });
 
-  return modules.map(({ progress, ...learningModule }) => ({
-    ...learningModule,
-    userProgress: progress[0] ?? null,
-  }));
-});
+    return modules.map(({ progress, ...learningModule }) => ({
+      ...learningModule,
+      userProgress: progress[0] ?? null,
+    }));
+  },
+);
 
 export const getLearningModuleForUser = cache(
-  async (moduleIdOrSlug: string, userId: string) => {
+  async (
+    moduleIdOrSlug: string,
+    userId: string,
+    audience: ModuleAudience = ModuleAudience.STAFF,
+  ) => {
     const learningModuleRecord = await prisma.learningModule.findFirst({
       where: {
         status: ModuleStatus.PUBLISHED,
+        audience,
         OR: [{ id: moduleIdOrSlug }, { slug: moduleIdOrSlug }],
       },
       include: {
@@ -66,7 +77,7 @@ export const getLearningModuleForUser = cache(
 export const getStaffLearningSummary = cache(async (userId: string) => {
   const [progress, sessions] = await Promise.all([
     prisma.moduleProgress.findMany({
-      where: { userId },
+      where: { userId, module: { audience: ModuleAudience.STAFF } },
       include: { module: true },
       orderBy: { module: { order: "asc" } },
     }),
@@ -140,6 +151,33 @@ export const getStaffLearningSummary = cache(async (userId: string) => {
     skillAverages,
     recommendedModule: scoredSessions[0]?.assessment?.recommendedModule ?? null,
     moduleProgress: progress,
+  };
+});
+
+export const getMemberLearningSummary = cache(async (userId: string) => {
+  const modules = await getLearningModulesForUser(
+    userId,
+    ModuleAudience.MEMBER,
+  );
+  const completedModules = modules.filter(
+    (module) => module.userProgress?.completed,
+  ).length;
+  const overallProgress = modules.length
+    ? Math.round(
+        modules.reduce(
+          (total, module) => total + (module.userProgress?.progress ?? 0),
+          0,
+        ) / modules.length,
+      )
+    : 0;
+
+  return {
+    modules,
+    completedModules,
+    totalModules: modules.length,
+    overallProgress,
+    nextModule:
+      modules.find((module) => !module.userProgress?.completed) ?? null,
   };
 });
 
