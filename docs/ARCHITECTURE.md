@@ -2,13 +2,14 @@
 
 ## Product boundary
 
-IFI Savoir-Faire Hub is a modular Next.js application for service microlearning, deterministic visitor roleplay, learning assessment, staff development, and manager insight. It is a focused university prototype rather than a full learning-management or HR platform.
+IFI Savoir-Faire Hub is a modular Next.js application for staff service microlearning, deterministic visitor roleplay, learning assessment, manager insight, and separate member self-study. It is a focused university prototype rather than a production learning-management or HR platform.
 
 ## System shape
 
 ```text
 Browser
 ├── Staff learning workspace
+├── IFI member learning workspace
 ├── Manager development dashboard
 └── Admin content workspace
         │
@@ -54,7 +55,7 @@ Pages should not contain direct database mutations. Services own domain rules an
 
 Credentials authentication normalizes the submitted email, loads the user through Prisma, and verifies the stored bcrypt password hash. The signed token carries the database user ID and role for an eight-hour session. Every protected page then enforces its permitted role on the server.
 
-Learning reads are handled by the learning service and rendered with Server Components. Quiz answers are submitted through a validated Server Action. A perfect result upserts the employee's module progress to 100%; an already completed module is returned unchanged so repeated submissions cannot create duplicate completion state. Revalidated staff pages then read the persisted aggregate progress from PostgreSQL.
+Learning reads are handled by the learning service and rendered with Server Components. Each published module has an audience (`STAFF` or `MEMBER`), and queries plus quiz actions enforce that boundary. Quiz answers are submitted through a validated Server Action. A perfect result upserts the learner's module progress to 100%; an already completed module is returned unchanged so repeated submissions cannot create duplicate completion state. Revalidated role-specific pages then read persisted progress from PostgreSQL.
 
 ## Route topology
 
@@ -75,6 +76,13 @@ Learning reads are handled by the learning service and rendered with Server Comp
 - `/manager/team`
 - `/manager/skills`
 
+### IFI Member
+
+- `/member`
+- `/member/courses`
+- `/member/courses/[moduleId]`
+- `/member/progress`
+
 ### Super Admin
 
 - `/admin/learning`
@@ -82,6 +90,8 @@ Learning reads are handled by the learning service and rendered with Server Comp
 - `/admin/users`
 
 The root route redirects unauthenticated users to `/login` and authenticated users to their role home.
+
+Member learning is isolated from staff training and manager metrics. A seeded member account and three source-informed prototype courses demonstrate the flow. There is no self-registration or IFI membership verification yet; real member provisioning is a separate launch requirement.
 
 ## Simulation separation
 

@@ -83,3 +83,12 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 - [x] Rehearse the deterministic simulation journey
 - [x] Document optional Vercel deployment
 - [x] Run final production build and demo rehearsal
+
+## Phase 10 — Member Learning Prototype
+
+- [x] Add a separate MEMBER role and module audience boundary
+- [x] Add member dashboard, course catalogue, lessons, quizzes, and progress
+- [x] Seed a demo member and three original French-learning courses without resetting existing data
+- [x] Keep member courses out of staff and manager analytics
+- [ ] Decide member onboarding and verify actual IFI membership before public access
+- [ ] Obtain IFI-approved learning materials and course ownership before a real LMS launch

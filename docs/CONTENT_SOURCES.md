@@ -12,11 +12,16 @@ Public sources were used only to ground the prototype in authentic institutional
 
 Service behaviors, lesson wording, quiz answers, simulated visitor conversations, and scoring guidance were written specifically for this university prototype.
 
+Member courses are also original prototype content. They use introductory French expressions and cultural-exchange themes; they do not reproduce IFI course materials or qualify learners for an IFI certificate.
+
 ## Official sources reviewed
 
 - [Institut Français d'Indonésie — identity, vision, and missions](https://www.ifi-id.com/fr/if-indonesie/)
 - [Institut Français d'Indonésie — cultural activities](https://www.ifi-id.com/fr/activites-culturelles/)
 - [Institut Français d'Indonésie — education](https://www.ifi-id.com/fr/education/)
+- [Institut Français d'Indonésie — online French courses](https://www.ifi-id.com/fr/cours-en-ligne/)
+- [Institut Français d'Indonésie — French courses](https://www.ifi-id.com/fr/cours1/)
+- [Institut Français d'Indonésie — DELF/DALF information](https://www.ifi-id.com/fr/delf-dalf-fr/)
 - [Institut Français d'Indonésie — in-person course FAQ](https://www.ifi-id.com/fr/foire-aux-questions-faq-cours-en-presentiel/)
 - [Institut Français d'Indonésie — university cooperation and Campus France](https://www.ifi-id.com/fr/cooperation-universitaire/)
 - [France Diplomatie — culture, education, and francophonie](https://www.diplomatie.gouv.fr/fr/le-ministere/reseau-diplomatique/les-operateurs-du-ministere/culture-education-francophonie)

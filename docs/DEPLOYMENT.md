@@ -18,6 +18,7 @@ Use these accounts with password `demo123`:
 | Staff       | `alex.staff@ifi.demo` | `/home`            |
 | Manager     | `manager@ifi.demo`    | `/manager`         |
 | Super Admin | `admin@ifi.demo`      | `/admin/scenarios` |
+| IFI Member  | `member@ifi.demo`     | `/member`          |
 
 ## Vercel deployment
 
@@ -44,7 +45,9 @@ npm run db:seed -- --if-empty
 
 Remove `.env.production.local` after use and never commit downloaded environment files.
 
-The `--if-empty` safeguard refuses to replace an existing application dataset. The normal `npm run demo:reset` command is deliberately destructive and should only be used against the dedicated local demo database.
+The `--if-empty` safeguard preserves an existing application dataset while adding missing member demo content; it seeds the full investor dataset only when the database is empty. The normal `npm run demo:reset` command is deliberately destructive and should only be used against the dedicated local demo database.
+
+**Do not expose these shared `demo123` accounts on a public production URL.** The member area is a prototype: it does not verify IFI membership, handle self-registration, or provide a production account-recovery process. Resolve onboarding and replace demo credentials before opening the site to real members.
 
 Official references:
 

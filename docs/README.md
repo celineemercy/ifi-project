@@ -1,6 +1,6 @@
 # IFI Savoir-Faire Hub
 
-IFI Savoir-Faire Hub is a service training and deterministic simulation prototype proposed by Pradita University for Institut français d’Indonésie (IFI).
+IFI Savoir-Faire Hub is a learning prototype proposed by Pradita University for Institut français d’Indonésie (IFI). It includes staff service training and a separate IFI member self-study experience.
 
 It extends the Business Management workshop **“Savoir-Faire in Service: Delivering Excellence in Every Interaction”** into a continuous digital learning experience:
 
@@ -10,7 +10,7 @@ This is a university prototype, not an IFI operational system or a formal employ
 
 ## Current status
 
-Phases 1–9 — the complete investor-demo prototype — are implemented:
+Phases 1–9 — the original investor-demo prototype — are implemented, with a member-learning prototype added in Phase 10:
 
 - Next.js App Router with strict TypeScript
 - Tailwind CSS and shared shadcn/ui components
@@ -21,9 +21,11 @@ Phases 1–9 — the complete investor-demo prototype — are implemented:
 - Complete route foundation for learning, practice, assessment, progress, management, and administration
 - Docker Compose PostgreSQL configuration
 - Prisma 7 domain schema, migration, and verified deterministic seed data
-- 12 fictional staff profiles, five learning modules, five service scenarios, and 20 completed simulations
+- 12 fictional staff profiles, one demo member, five staff modules, three member courses, five service scenarios, and 20 completed simulations
 - Alex's required 68% progress, 3/5 completion, seven sessions, and 84% average score
 - Database-backed staff home, learning catalogue, module lessons, and progress dashboard
+- Separate member dashboard, French self-study catalogue, lessons, quizzes, and progress
+- Member-only course access with a seeded demo member account; staff modules remain private to staff
 - A functional three-question module quiz with idempotent completion and persisted progress
 - Deterministic visitor roleplay with stored, sequenced conversation messages
 - Idempotent developmental assessments with five skill scores and module recommendations
@@ -108,8 +110,11 @@ All prototype accounts use the prototype-only password `demo123`.
 | Staff       | `alex.staff@ifi.demo` | `/home`            |
 | Manager     | `manager@ifi.demo`    | `/manager`         |
 | Super Admin | `admin@ifi.demo`      | `/admin/scenarios` |
+| IFI Member  | `member@ifi.demo`     | `/member`          |
 
-These identities are stored in PostgreSQL and verified through the same database-backed authentication flow used by the application.
+These identities are stored in PostgreSQL and verified through the same database-backed authentication flow used by the application. The sign-in form also accepts the email of any separately provisioned account.
+
+The member demo account shows one completed course out of three. Member courses are original English-language prototype lessons inspired by IFI's public French-learning and cultural themes. They are **not** official IFI lessons, paid course enrollments, or certification preparation. Existing Docker databases receive the member demo account and courses idempotently on startup without resetting staff progress.
 
 `npm run db:seed` resets the dedicated prototype data and recreates the verified demonstration dataset.
 
@@ -149,4 +154,4 @@ Never commit `.env.local` or production secrets.
 
 ## Scope boundary
 
-The prototype does not implement live AI, customer feedback, service tickets, payment, course registration, production SSO, HR integration, certificates, branch operations, or formal employee scoring.
+The prototype does not implement live AI, customer feedback, service tickets, payment, course registration, member self-sign-up, membership verification, production SSO, HR integration, certificates, branch operations, or formal employee scoring. Actual IFI member onboarding needs an approved account and identity process before public launch.

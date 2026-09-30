@@ -14,11 +14,11 @@ Confirm both containers report `healthy`, then open [http://localhost:3000](http
 
 The seed is deterministic and verified every time it runs:
 
-- 14 total demo users: 12 staff, one manager, and one super admin
-- Five published learning modules containing 15 lessons and 15 quiz questions
+- 15 total demo users: 12 staff, one member, one manager, and one super admin
+- Five staff modules and three member courses containing 24 lessons and 24 quiz questions
 - Five active visitor scenarios across Courses, Culture, Médiathèque, and Campus France
 - 20 completed simulation sessions with sequenced transcripts and assessments
-- 38 completed staff-module records
+- 38 completed staff-module records and one completed member course
 - Alex starts at 68% learning progress, 3/5 modules, seven simulations, and an 84% average score
 
 ## Pitch journey
@@ -30,6 +30,7 @@ The seed is deterministic and verified every time it runs:
 5. Open Progress and show the session count increasing from seven to eight.
 6. Sign in as Manager and show participation, aggregate skill insights, and **Suggested Training Focus**.
 7. Sign in as Super Admin and show learning content, demo users, scenario editing, and activation controls.
+8. Optionally sign in as `member@ifi.demo` and show the separate French-learning dashboard, course catalogue, quiz, and progress.
 
 The simulator is intentionally deterministic rather than live AI. This keeps the pitch repeatable, removes API-key risk, and follows the approved prototype scope.
 
