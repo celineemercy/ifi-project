@@ -4,7 +4,7 @@ const demoPassword = "demo123";
 
 async function signIn(
   page: Page,
-  account: "Alex - Staff" | "Manager" | "Super Admin",
+  account: "Alex - Staff" | "Manager" | "Super Admin" | "IFI Member",
 ) {
   await page.goto("/login");
 
@@ -171,4 +171,48 @@ test("desktop sidebar stays visible beside long assessment history", async ({
     () => document.documentElement.scrollWidth > window.innerWidth,
   );
   expect(hasHorizontalOverflow).toBe(false);
+});
+
+test("IFI member learns in a separate self-study workspace", async ({
+  page,
+}) => {
+  await signIn(page, "IFI Member");
+  await expect(page).toHaveURL(/\/member$/);
+  await expect(
+    page.getByRole("heading", { name: "Bonjour, Maya." }),
+  ).toBeVisible();
+  await expect(page.getByText("1 / 3", { exact: true })).toBeVisible();
+
+  await page.getByRole("link", { name: "Explore Courses" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Explore French learning" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "French First Steps: Bonjour!" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "French in Everyday Life" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Explore French Culture" }),
+  ).toBeVisible();
+  await expect(page.getByText("The Savoir-Faire Service Mindset")).toHaveCount(
+    0,
+  );
+
+  await page
+    .locator('a[href="/member/courses/french-in-everyday-life"]')
+    .click();
+  await page.getByLabel("Où est la bibliothèque, s'il vous plaît ?").check();
+  await page.getByLabel("On the left").check();
+  await page.getByLabel("À trois heures").check();
+  await page.getByRole("button", { name: "Complete module" }).click();
+  await expect(
+    page.getByText("Module complete. Your learning progress has been updated."),
+  ).toBeVisible();
+
+  await page.getByRole("link", { name: "My Progress" }).click();
+  await expect(page.getByText("2 / 3", { exact: true })).toBeVisible();
+  await page.goto("/learning");
+  await expect(page).toHaveURL(/\/member$/);
 });
