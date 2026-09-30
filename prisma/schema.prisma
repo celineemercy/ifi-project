@@ -60,6 +60,7 @@ model User {
   updatedAt          DateTime            @updatedAt
   moduleProgress     ModuleProgress[]
   simulationSessions SimulationSession[]
+  demoPurchases      DemoPurchase[]
 
   @@index([role])
   @@index([department])
@@ -117,6 +118,33 @@ model ModuleProgress {
   @@unique([userId, moduleId])
   @@index([userId, completed])
   @@index([moduleId, completed])
+}
+
+model LearningPackage {
+  id          String         @id @default(cuid())
+  slug        String         @unique
+  title       String
+  description String
+  priceIdr    Int
+  moduleIds   String[]
+  features    String[]
+  sortOrder   Int            @unique
+  active      Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  purchases   DemoPurchase[]
+}
+
+// A demo confirmation only. This model never records or initiates a real charge.
+model DemoPurchase {
+  id          String          @id @default(cuid())
+  userId      String
+  packageId   String
+  confirmedAt DateTime        @default(now())
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  package     LearningPackage @relation(fields: [packageId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, packageId])
+  @@index([userId, confirmedAt])
 }
 
 model Scenario {
