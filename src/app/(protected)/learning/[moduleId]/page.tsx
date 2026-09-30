@@ -81,7 +81,7 @@ export default async function LearningModulePage({
 
         {learningModule.lessons.map((lesson) => (
           <Card key={lesson.id}>
-            <CardContent className="p-6 sm:p-7">
+            <CardContent className="p-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="text-muted-foreground text-sm font-semibold">
@@ -108,7 +108,7 @@ export default async function LearningModulePage({
       </section>
 
       <Card className="mt-8">
-        <CardContent className="p-6 sm:p-8">
+        <CardContent className="p-5">
           <p className="text-brand-green text-sm font-semibold tracking-[0.13em] uppercase">
             Check your understanding
           </p>

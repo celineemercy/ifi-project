@@ -58,7 +58,7 @@ export default async function ManagerPage() {
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => (
           <Card key={metric.label}>
-            <CardContent className="p-5">
+            <CardContent className="p-4">
               <metric.icon className="size-5 text-primary" aria-hidden="true" />
               <p className="mt-4 text-3xl font-bold">{metric.value}</p>
               <p className="mt-1 text-sm text-muted-foreground">

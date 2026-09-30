@@ -12,7 +12,7 @@ export default function ProtectedLoading() {
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 4 }, (_, index) => (
           <Card key={index}>
-            <CardContent className="space-y-4 p-6">
+            <CardContent className="space-y-3 p-4">
               <Skeleton className="size-10" />
               <Skeleton className="h-8 w-24" />
               <Skeleton className="h-4 w-32" />
@@ -21,7 +21,7 @@ export default function ProtectedLoading() {
         ))}
       </section>
       <Card>
-        <CardContent className="space-y-4 p-6">
+        <CardContent className="space-y-3 p-4">
           <Skeleton className="h-6 w-48" />
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-5/6" />

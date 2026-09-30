@@ -59,7 +59,7 @@ export function SimulationChat({
 
   return (
     <Card className="mt-8 overflow-hidden">
-      <CardHeader className="border-b pb-5">
+      <CardHeader className="border-b pb-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <Badge variant="success">Simulation in progress</Badge>
@@ -71,7 +71,7 @@ export function SimulationChat({
         </div>
       </CardHeader>
 
-      <CardContent className="max-h-[52vh] space-y-4 overflow-y-auto bg-muted/35 p-5 sm:p-6">
+      <CardContent className="max-h-[52vh] space-y-4 overflow-y-auto bg-muted/35 p-4">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -97,7 +97,7 @@ export function SimulationChat({
         ))}
       </CardContent>
 
-      <CardFooter className="block border-t p-5 sm:p-6">
+      <CardFooter className="block border-t p-4">
         <form ref={formRef} action={formAction} className="space-y-3">
           <Textarea
             name="message"

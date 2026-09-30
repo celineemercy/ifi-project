@@ -37,7 +37,7 @@ export default async function AssessmentsPage() {
         <section className="grid gap-4">
           {assessments.map((item) => (
             <Card key={item.id}>
-              <CardContent className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+              <CardContent className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-4">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
                     <ClipboardCheck className="size-5" aria-hidden="true" />

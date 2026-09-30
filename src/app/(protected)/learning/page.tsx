@@ -29,7 +29,7 @@ export default async function LearningPage() {
           return (
             <Card key={module.id} className="overflow-hidden">
               <CardContent className="p-0">
-                <div className="p-6 sm:p-7">
+                <div className="p-5">
                   <div className="flex items-start justify-between gap-4">
                     <span className="bg-brand-green-light text-brand-green grid size-11 shrink-0 place-items-center rounded-xl">
                       <BookOpen className="size-5" />
@@ -61,7 +61,7 @@ export default async function LearningPage() {
                     <Progress value={progress} />
                   </div>
                 </div>
-                <div className="border-border flex items-center justify-between border-t px-6 py-4 sm:px-7">
+                <div className="border-border flex items-center justify-between border-t px-5 py-3">
                   <span className="text-muted-foreground text-sm">
                     {progress > 0 && !completed
                       ? "Continue where you left off"

@@ -129,7 +129,7 @@ export default async function AssessmentPage({
 
       {assessment.recommendedModule ? (
         <Card>
-          <CardContent className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-4">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
                 <BookOpen className="size-5" aria-hidden="true" />

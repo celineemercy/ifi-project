@@ -58,7 +58,7 @@ export default async function ProgressPage() {
           ["Average score", `${summary.averageScore}%`],
         ].map(([label, value]) => (
           <Card key={label}>
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               <p className="text-3xl font-bold">{value}</p>
               <p className="text-muted-foreground mt-2 font-semibold">
                 {label}
@@ -70,7 +70,7 @@ export default async function ProgressPage() {
 
       <section className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
         <Card>
-          <CardContent className="p-6 sm:p-7">
+          <CardContent className="p-5">
             <p className="text-brand-green text-sm font-semibold tracking-[0.13em] uppercase">
               Skill development
             </p>
@@ -103,7 +103,7 @@ export default async function ProgressPage() {
 
         <div className="space-y-5">
           <Card className="border-brand-green/20 bg-brand-green-light/45">
-            <CardContent className="p-6">
+            <CardContent className="p-5">
               <Award className="text-brand-green size-7" />
               <p className="text-brand-green mt-4 text-sm font-semibold tracking-[0.13em] uppercase">
                 Strongest skill
@@ -120,7 +120,7 @@ export default async function ProgressPage() {
           </Card>
 
           <Card className="border-brand-orange/25 bg-orange-50">
-            <CardContent className="p-6">
+            <CardContent className="p-5">
               <Target className="text-brand-orange size-7" />
               <p className="mt-4 text-sm font-semibold tracking-[0.13em] text-orange-900 uppercase">
                 Needs more practice
@@ -145,7 +145,7 @@ export default async function ProgressPage() {
       </section>
 
       <Card className="mt-6">
-        <CardContent className="p-6 sm:p-7">
+        <CardContent className="p-5">
           <p className="text-brand-green text-sm font-semibold tracking-[0.13em] uppercase">
             Learning progress
           </p>

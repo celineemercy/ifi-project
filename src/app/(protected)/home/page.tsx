@@ -67,7 +67,7 @@ export default async function StaffHomePage() {
           const Icon = metric.icon;
           return (
             <Card key={metric.label}>
-              <CardContent className="p-6">
+              <CardContent className="p-4">
                 <div className="flex items-center justify-between gap-4">
                   <span
                     className={`grid size-11 place-items-center rounded-xl text-white ${metric.color}`}
@@ -87,7 +87,7 @@ export default async function StaffHomePage() {
 
       {nextModule ? (
         <Card className="mt-6 overflow-hidden">
-          <CardContent className="grid gap-8 p-7 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <CardContent className="grid gap-6 p-5 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-brand-green text-sm font-semibold tracking-[0.14em] uppercase">
                 Continue learning
