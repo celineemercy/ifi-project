@@ -10,6 +10,7 @@ import {
   SimulationStatus,
   UserRole,
 } from "../src/generated/prisma/client";
+import { memberModules } from "./member-content";
 
 const seedEnvFile = process.env.SEED_ENV_FILE;
 
@@ -1002,6 +1003,55 @@ async function seedLearning() {
   await prisma.moduleProgress.createMany({ data: progressRows });
 }
 
+async function seedMemberLearning() {
+  const member = await prisma.user.upsert({
+    where: { email: "member@ifi.demo" },
+    update: {},
+    create: {
+      id: "demo-member",
+      name: "Maya",
+      email: "member@ifi.demo",
+      role: UserRole.MEMBER,
+      passwordHash: passwordHashes.staff,
+    },
+  });
+
+  for (const moduleSeed of memberModules) {
+    const { lessons, quiz, ...moduleData } = moduleSeed;
+    await prisma.learningModule.upsert({
+      where: { id: moduleSeed.id },
+      update: {},
+      create: {
+        ...moduleData,
+        quiz: quiz.map((question) => ({
+          ...question,
+          options: [...question.options],
+        })),
+        lessons: { create: lessons.map((lesson) => ({ ...lesson })) },
+      },
+    });
+  }
+
+  await prisma.moduleProgress.upsert({
+    where: {
+      userId_moduleId: {
+        userId: member.id,
+        moduleId: memberModules[0].id,
+      },
+    },
+    update: {},
+    create: {
+      id: "progress-demo-member-01",
+      userId: member.id,
+      moduleId: memberModules[0].id,
+      progress: 100,
+      completed: true,
+      startedAt: new Date("2026-09-15T03:00:00.000Z"),
+      completedAt: new Date("2026-09-15T03:30:00.000Z"),
+    },
+  });
+}
+
 async function seedScenariosAndSessions() {
   await prisma.scenario.createMany({
     data: scenarios.map((scenario) => ({
@@ -1139,16 +1189,16 @@ async function verifySeed() {
   );
 
   const expected = {
-    userCount: 14,
+    userCount: 15,
     staffCount: 12,
-    moduleCount: 5,
-    lessonCount: 15,
+    moduleCount: 8,
+    lessonCount: 24,
     scenarioCount: 5,
     activeScenarioCount: 5,
     sessionCount: 20,
     messageCount: 80,
     assessmentCount: 20,
-    completedModules: 38,
+    completedModules: 39,
     alexProgress: 68,
     alexCompletedModules: 3,
     alexSessions: 7,
@@ -1189,7 +1239,10 @@ async function main() {
       prisma.scenario.count(),
     ]);
     if (counts.some((count) => count > 0)) {
-      console.info("Existing data found; skipping demo seed.");
+      await seedMemberLearning();
+      console.info(
+        "Existing data found; preserved it and ensured member demo content exists.",
+      );
       return;
     }
   }
@@ -1197,6 +1250,7 @@ async function main() {
   await resetPrototypeData();
   await seedUsers();
   await seedLearning();
+  await seedMemberLearning();
   await seedScenariosAndSessions();
   await verifySeed();
 }
