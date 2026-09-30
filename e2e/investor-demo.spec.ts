@@ -183,7 +183,7 @@ test("IFI member learns in a separate self-study workspace", async ({
   ).toBeVisible();
   await expect(page.getByText("1 / 3", { exact: true })).toBeVisible();
 
-  await page.getByRole("link", { name: "Explore Courses" }).click();
+  await page.locator('nav a[href="/member/courses"]').click();
   await expect(
     page.getByRole("heading", { name: "Explore French learning" }),
   ).toBeVisible();
