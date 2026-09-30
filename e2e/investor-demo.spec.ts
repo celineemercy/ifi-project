@@ -143,3 +143,32 @@ test("mobile staff navigation remains usable without horizontal overflow", async
   );
   expect(hasHorizontalOverflow).toBe(false);
 });
+
+test("desktop sidebar stays visible beside long assessment history", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await signIn(page, "Alex - Staff");
+  await page.goto("/assessments");
+  await expect(
+    page.getByRole("heading", { name: "Review your practice feedback" }),
+  ).toBeVisible();
+
+  const pageHeight = await page.evaluate(
+    () => document.documentElement.scrollHeight,
+  );
+  expect(pageHeight).toBeGreaterThan(720);
+
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  const sidebar = await page.locator("aside").boundingBox();
+  expect(sidebar).not.toBeNull();
+  expect(sidebar!.y).toBe(0);
+  expect(sidebar!.height).toBe(720);
+  await expect(page.getByRole("link", { name: "My Learning" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Sign out" })).toBeVisible();
+
+  const hasHorizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(hasHorizontalOverflow).toBe(false);
+});

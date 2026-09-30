@@ -85,8 +85,8 @@ export function AppShell({
   const navigation = navigationByRole[user.role];
 
   return (
-    <div className="bg-background min-h-screen lg:grid lg:grid-cols-[272px_1fr]">
-      <aside className="hidden min-h-screen flex-col bg-[#053b23] p-5 text-white lg:flex">
+    <div className="bg-background min-h-screen lg:grid lg:grid-cols-[272px_minmax(0,1fr)] lg:bg-[#053b23]">
+      <aside className="hidden flex-col bg-[#053b23] p-5 text-white lg:sticky lg:top-0 lg:flex lg:h-dvh lg:self-start lg:overflow-y-auto">
         <Link href={homeByRole[user.role]} className="px-2 py-3">
           <ProductMark inverse />
         </Link>
@@ -94,7 +94,7 @@ export function AppShell({
         <UserFooter user={user} />
       </aside>
 
-      <div className="min-w-0">
+      <div className="bg-background min-w-0">
         <header className="border-border sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-white/95 px-5 backdrop-blur lg:hidden">
           <ProductMark />
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
