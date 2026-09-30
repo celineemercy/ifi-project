@@ -9,6 +9,7 @@ import {
   SimulationStatus,
 } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db/client";
+import { getMemberPackageState } from "@/services/member-packages.service";
 
 const quizQuestionSchema = z.object({
   id: z.string(),
@@ -155,10 +156,10 @@ export const getStaffLearningSummary = cache(async (userId: string) => {
 });
 
 export const getMemberLearningSummary = cache(async (userId: string) => {
-  const modules = await getLearningModulesForUser(
-    userId,
-    ModuleAudience.MEMBER,
-  );
+  const [modules, packageState] = await Promise.all([
+    getLearningModulesForUser(userId, ModuleAudience.MEMBER),
+    getMemberPackageState(userId),
+  ]);
   const completedModules = modules.filter(
     (module) => module.userProgress?.completed,
   ).length;
@@ -176,8 +177,16 @@ export const getMemberLearningSummary = cache(async (userId: string) => {
     completedModules,
     totalModules: modules.length,
     overallProgress,
+    unlockedModuleIds: packageState.unlockedModuleIds,
+    unlockedModules: modules.filter((module) =>
+      packageState.unlockedModuleIds.has(module.id),
+    ).length,
     nextModule:
-      modules.find((module) => !module.userProgress?.completed) ?? null,
+      modules.find(
+        (module) =>
+          packageState.unlockedModuleIds.has(module.id) &&
+          !module.userProgress?.completed,
+      ) ?? null,
   };
 });
 

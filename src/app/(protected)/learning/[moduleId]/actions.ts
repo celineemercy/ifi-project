@@ -9,6 +9,7 @@ import {
   completeLearningModule,
   getLearningModuleForUser,
 } from "@/services/learning.service";
+import { getMemberPackageState } from "@/services/member-packages.service";
 
 export async function submitModuleQuiz(
   moduleId: string,
@@ -33,6 +34,19 @@ export async function submitModuleQuiz(
       total: null,
       message: "This quiz is unavailable. Please return to My Learning.",
     };
+  }
+
+  if (session.user.role === "MEMBER") {
+    const packageState = await getMemberPackageState(session.user.id);
+    if (!packageState.unlockedModuleIds.has(learningModule.id)) {
+      return {
+        status: "error",
+        score: null,
+        total: null,
+        message:
+          "This course is locked. Choose a learning package to continue.",
+      };
+    }
   }
 
   const answers = learningModule.quizQuestions.map((question) => {
