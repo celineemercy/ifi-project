@@ -22,19 +22,12 @@ const demoEmails = [
   "alex.staff@ifi.demo",
   "manager@ifi.demo",
   "admin@ifi.demo",
+  "member@ifi.demo",
 ] as const;
-
-const destinationByEmail: Record<(typeof demoEmails)[number], string> = {
-  "alex.staff@ifi.demo": "/home",
-  "manager@ifi.demo": "/manager",
-  "admin@ifi.demo": "/admin/scenarios",
-};
 
 export function LoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState<(typeof demoEmails)[number]>(
-    demoEmails[0],
-  );
+  const [email, setEmail] = useState<string>(demoEmails[0]);
   const [password, setPassword] = useState(demoPassword);
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
@@ -56,7 +49,7 @@ export function LoginForm() {
       return;
     }
 
-    router.push(destinationByEmail[email]);
+    router.push("/");
     router.refresh();
   }
 
@@ -65,10 +58,8 @@ export function LoginForm() {
       <div className="grid gap-2">
         <Label htmlFor="demo-account">Demo account</Label>
         <Select
-          value={email}
-          onValueChange={(value) =>
-            setEmail(value as (typeof demoEmails)[number])
-          }
+          value={demoEmails.find((demoEmail) => demoEmail === email) ?? ""}
+          onValueChange={setEmail}
         >
           <SelectTrigger id="demo-account" className="h-11">
             <SelectValue placeholder="Choose a demo account" />
@@ -77,9 +68,22 @@ export function LoginForm() {
             <SelectItem value={demoEmails[0]}>Alex - Staff</SelectItem>
             <SelectItem value={demoEmails[1]}>Manager</SelectItem>
             <SelectItem value={demoEmails[2]}>Super Admin</SelectItem>
+            <SelectItem value={demoEmails[3]}>IFI Member</SelectItem>
           </SelectContent>
         </Select>
-        <p className="text-muted-foreground text-xs">{email}</p>
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          autoComplete="username"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          className="h-11"
+          required
+        />
       </div>
 
       <div className="grid gap-2">

@@ -9,6 +9,7 @@ const homeByRole: Record<AppRole, string> = {
   STAFF: "/home",
   MANAGER: "/manager",
   SUPER_ADMIN: "/admin/scenarios",
+  MEMBER: "/member",
 };
 
 export const verifySession = cache(async () => {

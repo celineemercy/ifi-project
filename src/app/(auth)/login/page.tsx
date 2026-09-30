@@ -18,14 +18,14 @@ export default function LoginPage() {
             <ProductMark />
           </Link>
           <p className="text-brand-green mt-12 text-sm font-semibold tracking-[0.15em] uppercase">
-            Continuous service learning
+            Learning for IFI staff and members
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight">
             Welcome back.
           </h1>
           <p className="text-muted-foreground mt-3 leading-7">
-            Sign in with a prototype account to learn, practice, assess, and
-            improve.
+            Explore French as an IFI member, or continue service training as IFI
+            staff. Choose a demo account or enter your provisioned email.
           </p>
           <Suspense fallback={<Skeleton className="mt-8 h-72" />}>
             <LoginForm />
@@ -41,13 +41,13 @@ export default function LoginPage() {
         <div className="absolute inset-0 [background-image:radial-gradient(circle_at_center,white_1px,transparent_1.5px)] [background-size:28px_28px] opacity-10" />
         <div className="relative max-w-xl">
           <p className="text-sm font-semibold tracking-[0.16em] text-white/65 uppercase">
-            Beyond the workshop
+            Learn beyond the classroom
           </p>
           <h2 className="mt-4 text-5xl leading-tight font-bold">
-            Great service grows through continuous practice.
+            A place to discover, practise, and keep growing.
           </h2>
           <div className="mt-8 grid grid-cols-4 gap-2 text-center text-sm font-semibold">
-            {["Learn", "Practice", "Assess", "Improve"].map((step, index) => (
+            {["Explore", "Learn", "Practise", "Progress"].map((step, index) => (
               <div
                 key={step}
                 className="rounded-xl border border-white/15 bg-white/10 px-2 py-3"

@@ -8,6 +8,7 @@ const homeByRole: Record<AppRole, string> = {
   STAFF: "/home",
   MANAGER: "/manager",
   SUPER_ADMIN: "/admin/scenarios",
+  MEMBER: "/member",
 };
 
 export default async function RootPage() {

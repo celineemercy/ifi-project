@@ -13,6 +13,7 @@ import {
   Gauge,
   Menu,
   MessagesSquare,
+  GraduationCap,
   TrendingUp,
   Users,
   UsersRound,
@@ -45,6 +46,7 @@ type NavItem = {
   label: string;
   href: string;
   icon: LucideIcon;
+  exact?: boolean;
 };
 
 const navigationByRole: Record<AppRole, NavItem[]> = {
@@ -65,12 +67,18 @@ const navigationByRole: Record<AppRole, NavItem[]> = {
     { label: "Scenarios", href: "/admin/scenarios", icon: BrainCircuit },
     { label: "Users", href: "/admin/users", icon: Users },
   ],
+  MEMBER: [
+    { label: "My Dashboard", href: "/member", icon: Gauge, exact: true },
+    { label: "Explore Courses", href: "/member/courses", icon: GraduationCap },
+    { label: "My Progress", href: "/member/progress", icon: TrendingUp },
+  ],
 };
 
 const homeByRole: Record<AppRole, string> = {
   STAFF: "/home",
   MANAGER: "/manager",
   SUPER_ADMIN: "/admin/scenarios",
+  MEMBER: "/member",
 };
 
 export function AppShell({
@@ -155,7 +163,8 @@ function NavItems({
       {items.map((item) => {
         const Icon = item.icon;
         const active =
-          pathname === item.href || pathname.startsWith(`${item.href}/`);
+          pathname === item.href ||
+          (!item.exact && pathname.startsWith(`${item.href}/`));
         return (
           <Button
             key={item.href}
