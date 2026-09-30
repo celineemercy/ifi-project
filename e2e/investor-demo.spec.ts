@@ -181,7 +181,7 @@ test("IFI member learns in a separate self-study workspace", async ({
   await expect(
     page.getByRole("heading", { name: "Bonjour, Maya." }),
   ).toBeVisible();
-  await expect(page.getByText("1 / 3", { exact: true })).toBeVisible();
+  await expect(page.getByText("33%", { exact: true })).toBeVisible();
 
   await page.locator('nav a[href="/member/courses"]').click();
   await expect(
@@ -200,9 +200,34 @@ test("IFI member learns in a separate self-study workspace", async ({
     0,
   );
 
+  await page.goto("/member/courses/french-in-everyday-life");
+  await expect(
+    page.getByRole("heading", { name: "Unlock this course" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Complete module" }),
+  ).toHaveCount(0);
+
+  await page.locator('nav a[href="/member/packages"]').click();
+  await expect(
+    page.getByRole("heading", { name: "Choose your French-learning path" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Prototype checkout — no real payment"),
+  ).toBeVisible();
   await page
-    .locator('a[href="/member/courses/french-in-everyday-life"]')
+    .locator('a[href="/member/packages/everyday-french/checkout"]')
     .click();
+  await expect(
+    page.getByRole("heading", { name: "Review Everyday French Bundle" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Confirm demo purchase" }).click();
+  await expect(page.getByText("Demo purchase confirmed")).toBeVisible();
+
+  await page.goto("/member/courses/french-in-everyday-life");
+  await expect(
+    page.getByRole("heading", { name: "French in Everyday Life" }),
+  ).toBeVisible();
   await page.getByLabel("Où est la bibliothèque, s'il vous plaît ?").check();
   await page.getByLabel("On the left").check();
   await page.getByLabel("À trois heures").check();
