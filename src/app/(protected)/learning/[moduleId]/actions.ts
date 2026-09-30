@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { ModuleAudience } from "@/generated/prisma/client";
 
 import type { QuizState } from "@/components/learning/quiz-state";
 import { requireRole } from "@/lib/auth/session";
@@ -14,10 +15,15 @@ export async function submitModuleQuiz(
   _previousState: QuizState,
   formData: FormData,
 ): Promise<QuizState> {
-  const session = await requireRole(["STAFF"]);
+  const session = await requireRole(["STAFF", "MEMBER"]);
+  const audience =
+    session.user.role === "MEMBER"
+      ? ModuleAudience.MEMBER
+      : ModuleAudience.STAFF;
   const learningModule = await getLearningModuleForUser(
     moduleId,
     session.user.id,
+    audience,
   );
 
   if (!learningModule || learningModule.quizQuestions.length !== 3) {
@@ -66,6 +72,10 @@ export async function submitModuleQuiz(
   revalidatePath("/learning");
   revalidatePath(`/learning/${learningModule.slug}`);
   revalidatePath("/progress");
+  revalidatePath("/member");
+  revalidatePath("/member/courses");
+  revalidatePath(`/member/courses/${learningModule.slug}`);
+  revalidatePath("/member/progress");
 
   return {
     status: "passed",
