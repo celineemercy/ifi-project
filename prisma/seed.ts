@@ -11,6 +11,7 @@ import {
   UserRole,
 } from "../src/generated/prisma/client";
 import { memberModules } from "./member-content";
+import { memberPackages } from "./member-packages";
 
 const seedEnvFile = process.env.SEED_ENV_FILE;
 
@@ -951,6 +952,8 @@ const sessions: SessionSeed[] = [
 
 async function resetPrototypeData() {
   await prisma.$transaction([
+    prisma.demoPurchase.deleteMany(),
+    prisma.learningPackage.deleteMany(),
     prisma.assessment.deleteMany(),
     prisma.conversationMessage.deleteMany(),
     prisma.simulationSession.deleteMany(),
@@ -1031,6 +1034,33 @@ async function seedMemberLearning() {
       },
     });
   }
+
+  for (const packageSeed of memberPackages) {
+    await prisma.learningPackage.upsert({
+      where: { id: packageSeed.id },
+      update: {},
+      create: {
+        ...packageSeed,
+        moduleIds: [...packageSeed.moduleIds],
+        features: [...packageSeed.features],
+      },
+    });
+  }
+
+  await prisma.demoPurchase.upsert({
+    where: {
+      userId_packageId: {
+        userId: member.id,
+        packageId: memberPackages[0].id,
+      },
+    },
+    update: {},
+    create: {
+      id: "demo-purchase-member-first-steps",
+      userId: member.id,
+      packageId: memberPackages[0].id,
+    },
+  });
 
   await prisma.moduleProgress.upsert({
     where: {
@@ -1148,6 +1178,8 @@ async function verifySeed() {
     messageCount,
     assessmentCount,
     completedModules,
+    packageCount,
+    demoPurchaseCount,
   ] = await Promise.all([
     prisma.user.count(),
     prisma.user.count({ where: { role: UserRole.STAFF } }),
@@ -1161,6 +1193,8 @@ async function verifySeed() {
     prisma.conversationMessage.count(),
     prisma.assessment.count(),
     prisma.moduleProgress.count({ where: { completed: true } }),
+    prisma.learningPackage.count(),
+    prisma.demoPurchase.count(),
   ]);
 
   const alex = await prisma.user.findUniqueOrThrow({
@@ -1199,6 +1233,8 @@ async function verifySeed() {
     messageCount: 80,
     assessmentCount: 20,
     completedModules: 39,
+    packageCount: 3,
+    demoPurchaseCount: 1,
     alexProgress: 68,
     alexCompletedModules: 3,
     alexSessions: 7,
@@ -1215,6 +1251,8 @@ async function verifySeed() {
     messageCount,
     assessmentCount,
     completedModules,
+    packageCount,
+    demoPurchaseCount,
     alexProgress,
     alexCompletedModules,
     alexSessions: alex.simulationSessions.length,
