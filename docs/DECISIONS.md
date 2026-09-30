@@ -61,3 +61,9 @@ No public IFI staff service-training curriculum matching the proposed workshop w
 **Status:** Accepted
 
 The public prototype will target Vercel. PostgreSQL must use an externally reachable managed provider in production; the local Docker database remains the development environment.
+
+## ADR-011 — Package checkout remains a no-charge simulation
+
+**Status:** Accepted for prototype
+
+Member packages are fictional French-learning bundles with sample IDR prices. A confirmation creates an idempotent demo record and grants access to included courses. The prototype never requests card details or calls a payment provider. Real IFI offers, prices, purchase terms, refunds, and payment integration require stakeholder approval before public launch.

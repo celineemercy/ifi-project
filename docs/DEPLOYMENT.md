@@ -47,7 +47,7 @@ Remove `.env.production.local` after use and never commit downloaded environment
 
 The `--if-empty` safeguard preserves an existing application dataset while adding missing member demo content; it seeds the full investor dataset only when the database is empty. The normal `npm run demo:reset` command is deliberately destructive and should only be used against the dedicated local demo database.
 
-**Do not expose these shared `demo123` accounts on a public production URL.** The member area is a prototype: it does not verify IFI membership, handle self-registration, or provide a production account-recovery process. Resolve onboarding and replace demo credentials before opening the site to real members.
+**Do not expose these shared `demo123` accounts on a public production URL.** The member area is a prototype: it does not verify IFI membership, handle self-registration, provide a production account-recovery process, or process real payments. Its package prices are fictional and checkout only records a demo confirmation. Resolve onboarding, package terms, payment-provider integration, and demo credentials before opening the site to real members.
 
 Official references:
 

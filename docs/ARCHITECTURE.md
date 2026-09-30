@@ -93,6 +93,8 @@ The root route redirects unauthenticated users to `/login` and authenticated use
 
 Member learning is isolated from staff training and manager metrics. A seeded member account and three source-informed prototype courses demonstrate the flow. There is no self-registration or IFI membership verification yet; real member provisioning is a separate launch requirement.
 
+Three seeded `LearningPackage` records represent fictional French-learning bundles. A `DemoPurchase` is a no-charge confirmation tied to one member and package; the `(userId, packageId)` constraint makes repeated submissions idempotent. Member course pages and quiz actions check the resulting package entitlements on the server. Package prices are display-only integers in IDR, never sent to a payment provider. A real commerce integration would need a separate order/payment lifecycle and IFI-approved pricing.
+
 ## Simulation separation
 
 Simulation and assessment are separate operations:

@@ -92,3 +92,11 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 - [x] Keep member courses out of staff and manager analytics
 - [ ] Decide member onboarding and verify actual IFI membership before public access
 - [ ] Obtain IFI-approved learning materials and course ownership before a real LMS launch
+
+## Phase 11 — Member Package Prototype
+
+- [x] Seed three clearly fictional French-learning bundles and sample IDR prices
+- [x] Add a Packages menu, package comparison, and review screen
+- [x] Confirm no-charge demo purchases idempotently and unlock included courses
+- [x] Enforce package access in member course pages and quiz actions
+- [ ] Obtain IFI-approved packages, prices, terms, and a payment provider before accepting real purchases

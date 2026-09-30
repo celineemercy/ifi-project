@@ -31,6 +31,7 @@ The seed is deterministic and verified every time it runs:
 6. Sign in as Manager and show participation, aggregate skill insights, and **Suggested Training Focus**.
 7. Sign in as Super Admin and show learning content, demo users, scenario editing, and activation controls.
 8. Optionally sign in as `member@ifi.demo` and show the separate French-learning dashboard, course catalogue, quiz, and progress.
+9. In the member workspace, open **Packages**, review the fictional IDR bundles, simulate a purchase of **Everyday French Bundle**, then show the newly unlocked course. No real payment is taken.
 
 The simulator is intentionally deterministic rather than live AI. This keeps the pitch repeatable, removes API-key risk, and follows the approved prototype scope.
 

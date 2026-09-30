@@ -14,6 +14,8 @@ Service behaviors, lesson wording, quiz answers, simulated visitor conversations
 
 Member courses are also original prototype content. They use introductory French expressions and cultural-exchange themes; they do not reproduce IFI course materials or qualify learners for an IFI certificate.
 
+Member package names, inclusions, and IDR prices are invented for the demo. They are not sourced from or endorsed by IFI and must not be presented as real offers.
+
 ## Official sources reviewed
 
 - [Institut Français d'Indonésie — identity, vision, and missions](https://www.ifi-id.com/fr/if-indonesie/)
