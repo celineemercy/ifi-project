@@ -22,7 +22,7 @@ export default async function AdminLearningPage() {
       <PageHeader
         eyebrow="Administration"
         title="Learning content"
-        description="Review the workshop-aligned modules, lessons, and participation stored in the prototype."
+        description="Review staff training and member self-study courses, lessons, and participation stored in the prototype."
       />
 
       <section className="grid gap-5 lg:grid-cols-2">
@@ -49,7 +49,14 @@ export default async function AdminLearningPage() {
                     {module.status === "PUBLISHED" ? "Published" : "Draft"}
                   </Badge>
                 </div>
-                <CardTitle className="text-xl">{module.title}</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle className="text-xl">{module.title}</CardTitle>
+                  <Badge variant="secondary">
+                    {module.audience === "MEMBER"
+                      ? "Member course"
+                      : "Staff training"}
+                  </Badge>
+                </div>
                 <CardDescription>{module.description}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">

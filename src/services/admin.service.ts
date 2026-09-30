@@ -14,7 +14,7 @@ export const getAdminScenarios = cache(async () =>
 
 export const getAdminLearningModules = cache(async () =>
   prisma.learningModule.findMany({
-    orderBy: { order: "asc" },
+    orderBy: [{ audience: "asc" }, { order: "asc" }],
     include: {
       _count: { select: { lessons: true, progress: true } },
       progress: { select: { completed: true } },

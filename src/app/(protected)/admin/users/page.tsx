@@ -16,6 +16,7 @@ const roleLabels = {
   STAFF: "Staff",
   MANAGER: "Manager",
   SUPER_ADMIN: "Super admin",
+  MEMBER: "Member",
 } as const;
 
 export default async function UsersPage() {
@@ -27,7 +28,7 @@ export default async function UsersPage() {
       <PageHeader
         eyebrow="Administration"
         title="Demo users"
-        description="Review prototype staff, manager, and administrator accounts and their current learning activity."
+        description="Review prototype staff, member, manager, and administrator accounts and their current learning activity."
       />
 
       <Card>
