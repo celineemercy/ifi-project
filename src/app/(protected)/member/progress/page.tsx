@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, LockKeyhole } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -59,13 +59,18 @@ export default async function MemberProgressPage() {
           <div className="space-y-4">
             {summary.modules.map((course) => {
               const progress = course.userProgress?.progress ?? 0;
+              const unlocked = summary.unlockedModuleIds.has(course.id);
               return (
                 <Card key={course.id}>
                   <CardContent className="grid gap-4 p-5 sm:grid-cols-[1fr_auto] sm:items-center">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
                         <h3 className="font-semibold">{course.title}</h3>
-                        {course.userProgress?.completed ? (
+                        {!unlocked ? (
+                          <Badge variant="outline">
+                            <LockKeyhole className="size-4" /> Locked
+                          </Badge>
+                        ) : course.userProgress?.completed ? (
                           <Badge variant="success">
                             <CheckCircle2 className="size-4" /> Completed
                           </Badge>
@@ -77,8 +82,18 @@ export default async function MemberProgressPage() {
                       </div>
                     </div>
                     <Button asChild variant="outline">
-                      <Link href={`/member/courses/${course.slug}`}>
-                        {course.userProgress?.completed ? "Review" : "Continue"}
+                      <Link
+                        href={
+                          unlocked
+                            ? `/member/courses/${course.slug}`
+                            : "/member/packages"
+                        }
+                      >
+                        {!unlocked
+                          ? "See packages"
+                          : course.userProgress?.completed
+                            ? "Review"
+                            : "Continue"}
                         <ArrowRight className="size-4" />
                       </Link>
                     </Button>

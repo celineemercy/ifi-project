@@ -61,8 +61,8 @@ export default async function MemberDashboardPage() {
             icon: BookOpenCheck,
           },
           {
-            label: "Courses available",
-            value: String(summary.totalModules),
+            label: "Courses unlocked",
+            value: `${summary.unlockedModules} / ${summary.totalModules}`,
             icon: GraduationCap,
           },
         ].map(({ label, value, icon: Icon }) => (
@@ -121,6 +121,23 @@ export default async function MemberDashboardPage() {
             </CardContent>
           </Card>
         </section>
+      ) : summary.unlockedModules < summary.totalModules ? (
+        <Card className="border-brand-orange/25 bg-orange-50">
+          <CardContent className="grid gap-4 p-6 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div>
+              <h2 className="text-xl font-bold">Ready for the next course?</h2>
+              <p className="text-muted-foreground mt-2">
+                Browse the prototype French-learning packages to unlock more
+                lessons.
+              </p>
+            </div>
+            <Button asChild>
+              <Link href="/member/packages">
+                View packages <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
       ) : (
         <Card>
           <CardContent className="p-6">
