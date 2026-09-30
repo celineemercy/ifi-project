@@ -14,6 +14,7 @@ import {
   Menu,
   MessagesSquare,
   GraduationCap,
+  ShoppingBag,
   TrendingUp,
   Users,
   UsersRound,
@@ -70,6 +71,7 @@ const navigationByRole: Record<AppRole, NavItem[]> = {
   MEMBER: [
     { label: "My Dashboard", href: "/member", icon: Gauge, exact: true },
     { label: "Explore Courses", href: "/member/courses", icon: GraduationCap },
+    { label: "Packages", href: "/member/packages", icon: ShoppingBag },
     { label: "My Progress", href: "/member/progress", icon: TrendingUp },
   ],
 };

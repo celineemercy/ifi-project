@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, Clock3, Lightbulb } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Clock3,
+  Lightbulb,
+  LockKeyhole,
+} from "lucide-react";
 import { notFound } from "next/navigation";
 import { ModuleAudience } from "@/generated/prisma/client";
 
@@ -11,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { requireRole } from "@/lib/auth/session";
 import { getLearningModuleForUser } from "@/services/learning.service";
+import { getMemberPackageState } from "@/services/member-packages.service";
 
 export default async function MemberCoursePage({
   params,
@@ -25,6 +32,40 @@ export default async function MemberCoursePage({
     ModuleAudience.MEMBER,
   );
   if (!course) notFound();
+
+  const packageState = await getMemberPackageState(session.user.id);
+  if (!packageState.unlockedModuleIds.has(course.id)) {
+    return (
+      <main className="space-y-7 p-5 sm:p-8 lg:p-10">
+        <Button asChild variant="ghost" className="-ml-3">
+          <Link href="/member/courses">
+            <ArrowLeft className="size-4" /> All courses
+          </Link>
+        </Button>
+        <PageHeader
+          eyebrow="Course preview"
+          title={course.title}
+          description={course.description}
+        />
+        <Card className="border-brand-orange/25">
+          <CardContent className="p-6 sm:p-8">
+            <LockKeyhole
+              className="text-brand-orange size-8"
+              aria-hidden="true"
+            />
+            <h2 className="mt-4 text-2xl font-bold">Unlock this course</h2>
+            <p className="text-muted-foreground mt-2 max-w-xl leading-7">
+              Choose a prototype learning package to access the lessons and
+              quiz. No real payment is taken in this demo.
+            </p>
+            <Button asChild className="mt-5">
+              <Link href="/member/packages">View packages</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
 
   const completed = course.userProgress?.completed ?? false;
 

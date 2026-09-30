@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, CheckCircle2, Clock3 } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  CheckCircle2,
+  Clock3,
+  LockKeyhole,
+} from "lucide-react";
 import { ModuleAudience } from "@/generated/prisma/client";
 
 import { PageHeader } from "@/components/layout/page-header";
@@ -9,13 +15,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { requireRole } from "@/lib/auth/session";
 import { getLearningModulesForUser } from "@/services/learning.service";
+import { getMemberPackageState } from "@/services/member-packages.service";
 
 export default async function MemberCoursesPage() {
   const session = await requireRole(["MEMBER"]);
-  const courses = await getLearningModulesForUser(
-    session.user.id,
-    ModuleAudience.MEMBER,
-  );
+  const [courses, packageState] = await Promise.all([
+    getLearningModulesForUser(session.user.id, ModuleAudience.MEMBER),
+    getMemberPackageState(session.user.id),
+  ]);
 
   return (
     <main className="space-y-8 p-5 sm:p-8 lg:p-10">
@@ -32,6 +39,7 @@ export default async function MemberCoursesPage() {
           {courses.map((course) => {
             const progress = course.userProgress?.progress ?? 0;
             const completed = course.userProgress?.completed ?? false;
+            const unlocked = packageState.unlockedModuleIds.has(course.id);
             return (
               <Card key={course.id} className="flex h-full flex-col">
                 <CardContent className="flex h-full flex-col p-6">
@@ -39,7 +47,11 @@ export default async function MemberCoursesPage() {
                     <span className="bg-brand-green-light text-brand-green grid size-12 place-items-center rounded-xl">
                       <BookOpen className="size-6" aria-hidden="true" />
                     </span>
-                    {completed ? (
+                    {!unlocked ? (
+                      <Badge variant="outline">
+                        <LockKeyhole className="size-4" /> Locked
+                      </Badge>
+                    ) : completed ? (
                       <Badge variant="success">
                         <CheckCircle2 className="size-4" /> Completed
                       </Badge>
@@ -67,12 +79,20 @@ export default async function MemberCoursesPage() {
                     <Progress value={progress} />
                   </div>
                   <Button asChild className="mt-6 w-full">
-                    <Link href={`/member/courses/${course.slug}`}>
-                      {completed
-                        ? "Review course"
-                        : progress
-                          ? "Continue course"
-                          : "Start course"}
+                    <Link
+                      href={
+                        unlocked
+                          ? `/member/courses/${course.slug}`
+                          : "/member/packages"
+                      }
+                    >
+                      {!unlocked
+                        ? "See packages"
+                        : completed
+                          ? "Review course"
+                          : progress
+                            ? "Continue course"
+                            : "Start course"}
                       <ArrowRight className="size-4" />
                     </Link>
                   </Button>
