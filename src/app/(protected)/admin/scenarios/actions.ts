@@ -4,10 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import type { ScenarioActionState } from "@/components/admin/scenario-state";
-import {
-  ScenarioDifficulty,
-  ServiceArea,
-} from "@/generated/prisma/client";
+import { ScenarioDifficulty, ServiceArea } from "@/generated/prisma/client";
 import { requireRole } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
 
@@ -99,7 +96,6 @@ export async function saveScenario(
 export async function toggleScenarioActive(
   scenarioId: string,
   active: boolean,
-  _formData: FormData,
 ) {
   await requireRole(["SUPER_ADMIN"]);
   await prisma.scenario.updateMany({

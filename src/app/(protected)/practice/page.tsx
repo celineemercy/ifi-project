@@ -23,6 +23,7 @@ const serviceAreas = [
   "COURSES",
   "CAMPUS_FRANCE",
   "MEDIATHEQUE",
+  "ADMINISTRATION",
 ] as const;
 
 export default async function PracticePage({
@@ -85,11 +86,11 @@ export default async function PracticePage({
                 <CardDescription>{scenario.description}</CardDescription>
               </CardHeader>
               <CardContent className="flex-1 space-y-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex items-center gap-2 text-sm">
                   <BrainCircuit className="size-4" aria-hidden="true" />
                   <span>{scenario.skills.join(" · ")}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex items-center gap-2 text-sm">
                   <Clock3 className="size-4" aria-hidden="true" />
                   <span>About 5 minutes</span>
                 </div>

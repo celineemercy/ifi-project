@@ -42,7 +42,7 @@ export default async function TeamProgressPage() {
                 <TableRow key={member.id}>
                   <TableCell>
                     <p className="font-medium">{member.name}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       {member.department ?? "IFI team"}
                     </p>
                   </TableCell>

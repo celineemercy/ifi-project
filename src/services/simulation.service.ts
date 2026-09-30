@@ -3,10 +3,7 @@ import "server-only";
 import { cache } from "react";
 import { z } from "zod";
 
-import {
-  ConversationRole,
-  SimulationStatus,
-} from "@/generated/prisma/client";
+import { ConversationRole, SimulationStatus } from "@/generated/prisma/client";
 import {
   assessTranscript,
   generateVisitorReply,
@@ -30,10 +27,7 @@ export const getScenarioForPractice = cache(async (slug: string) =>
   prisma.scenario.findFirst({ where: { slug, active: true } }),
 );
 
-export async function getCurrentSimulation(
-  userId: string,
-  scenarioId: string,
-) {
+export async function getCurrentSimulation(userId: string, scenarioId: string) {
   return prisma.simulationSession.findFirst({
     where: { userId, scenarioId, status: SimulationStatus.IN_PROGRESS },
     orderBy: { startedAt: "desc" },

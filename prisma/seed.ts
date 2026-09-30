@@ -11,6 +11,9 @@ import {
   UserRole,
 } from "../src/generated/prisma/client";
 
+const seedEnvFile = process.env.SEED_ENV_FILE;
+
+if (seedEnvFile) loadEnv({ path: seedEnvFile, override: true });
 loadEnv({ path: ".env.local" });
 loadEnv();
 
@@ -1085,18 +1088,28 @@ async function seedScenariosAndSessions() {
 
 async function verifySeed() {
   const [
+    userCount,
     staffCount,
     moduleCount,
+    lessonCount,
     scenarioCount,
+    activeScenarioCount,
     sessionCount,
+    messageCount,
+    assessmentCount,
     completedModules,
   ] = await Promise.all([
+    prisma.user.count(),
     prisma.user.count({ where: { role: UserRole.STAFF } }),
     prisma.learningModule.count(),
+    prisma.lesson.count(),
     prisma.scenario.count(),
+    prisma.scenario.count({ where: { active: true } }),
     prisma.simulationSession.count({
       where: { status: SimulationStatus.COMPLETED },
     }),
+    prisma.conversationMessage.count(),
+    prisma.assessment.count(),
     prisma.moduleProgress.count({ where: { completed: true } }),
   ]);
 
@@ -1126,10 +1139,15 @@ async function verifySeed() {
   );
 
   const expected = {
+    userCount: 14,
     staffCount: 12,
     moduleCount: 5,
+    lessonCount: 15,
     scenarioCount: 5,
+    activeScenarioCount: 5,
     sessionCount: 20,
+    messageCount: 80,
+    assessmentCount: 20,
     completedModules: 38,
     alexProgress: 68,
     alexCompletedModules: 3,
@@ -1137,10 +1155,15 @@ async function verifySeed() {
     alexAverageScore: 84,
   };
   const actual = {
+    userCount,
     staffCount,
     moduleCount,
+    lessonCount,
     scenarioCount,
+    activeScenarioCount,
     sessionCount,
+    messageCount,
+    assessmentCount,
     completedModules,
     alexProgress,
     alexCompletedModules,

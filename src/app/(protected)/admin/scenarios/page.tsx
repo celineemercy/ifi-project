@@ -139,7 +139,7 @@ export default async function AdminScenariosPage({
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+              <CardContent className="text-muted-foreground flex flex-wrap items-center gap-4 text-sm">
                 <span className="inline-flex items-center gap-2">
                   <MessagesSquare className="size-4" aria-hidden="true" />
                   {scenario._count.simulationSessions} practice sessions

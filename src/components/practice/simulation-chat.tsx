@@ -71,7 +71,7 @@ export function SimulationChat({
         </div>
       </CardHeader>
 
-      <CardContent className="max-h-[52vh] space-y-4 overflow-y-auto bg-muted/35 p-4">
+      <CardContent className="bg-muted/35 max-h-[52vh] space-y-4 overflow-y-auto p-4">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -85,7 +85,7 @@ export function SimulationChat({
                 "max-w-[85%] rounded-lg px-4 py-3 text-sm leading-6 sm:max-w-[72%]",
                 message.role === "EMPLOYEE"
                   ? "bg-primary text-primary-foreground"
-                  : "border bg-card text-card-foreground",
+                  : "bg-card text-card-foreground border",
               )}
             >
               <p className="mb-1 text-xs font-semibold opacity-65">

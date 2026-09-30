@@ -2,13 +2,17 @@ FROM node:22-bookworm-slim AS dependencies
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY package.json package-lock.json ./
-RUN npm ci --no-audit --no-fund --loglevel=http
+COPY package.json package-lock.json prisma.config.ts ./
+COPY prisma ./prisma
+RUN DATABASE_URL=postgresql://build:build@localhost:5432/build \
+    npm ci --no-audit --no-fund --loglevel=warn \
+    --fetch-retries=5 \
+    --fetch-retry-mintimeout=20000 \
+    --fetch-retry-maxtimeout=120000
 RUN apt-get update && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
 
 FROM dependencies AS build
 COPY . .
-RUN DATABASE_URL=postgresql://build:build@localhost:5432/build npm run db:generate
 RUN DATABASE_URL=postgresql://build:build@localhost:5432/build npm run build
 
 FROM node:22-bookworm-slim AS runner

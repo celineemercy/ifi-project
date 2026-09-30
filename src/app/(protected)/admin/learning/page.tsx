@@ -38,11 +38,13 @@ export default async function AdminLearningPage() {
             <Card key={module.id}>
               <CardHeader>
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex size-10 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
+                  <div className="bg-secondary text-secondary-foreground flex size-10 items-center justify-center rounded-md">
                     <BookOpen className="size-5" aria-hidden="true" />
                   </div>
                   <Badge
-                    variant={module.status === "PUBLISHED" ? "success" : "outline"}
+                    variant={
+                      module.status === "PUBLISHED" ? "success" : "outline"
+                    }
                   >
                     {module.status === "PUBLISHED" ? "Published" : "Draft"}
                   </Badge>
@@ -51,7 +53,7 @@ export default async function AdminLearningPage() {
                 <CardDescription>{module.description}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
-                <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex flex-wrap gap-4 text-sm">
                   <span className="inline-flex items-center gap-2">
                     <Clock3 className="size-4" aria-hidden="true" />
                     {module.durationMinutes} min

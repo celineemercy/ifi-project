@@ -129,8 +129,10 @@ export default async function ProgressPage() {
                 {practiceSkill?.label ?? "Complete a simulation"}
               </h2>
               <p className="text-muted-foreground mt-2 leading-6">
-                Recommended next learning: {summary.recommendedModule?.title ??
-                  "Complete another practice assessment"}.
+                Recommended next learning:{" "}
+                {summary.recommendedModule?.title ??
+                  "Complete another practice assessment"}
+                .
               </p>
               {summary.recommendedModule ? (
                 <Button asChild variant="outline" className="mt-5">

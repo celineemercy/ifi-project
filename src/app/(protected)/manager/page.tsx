@@ -59,9 +59,9 @@ export default async function ManagerPage() {
         {metrics.map((metric) => (
           <Card key={metric.label}>
             <CardContent className="p-4">
-              <metric.icon className="size-5 text-primary" aria-hidden="true" />
+              <metric.icon className="text-primary size-5" aria-hidden="true" />
               <p className="mt-4 text-3xl font-bold">{metric.value}</p>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="text-muted-foreground mt-1 text-sm">
                 {metric.label}
               </p>
             </CardContent>
@@ -101,7 +101,7 @@ export default async function ManagerPage() {
             <CardContent>
               <p className="text-4xl font-bold">
                 {analytics.averageScore}
-                <span className="text-base font-medium text-muted-foreground">
+                <span className="text-muted-foreground text-base font-medium">
                   /100
                 </span>
               </p>

@@ -39,7 +39,7 @@ export default async function AssessmentsPage() {
             <Card key={item.id}>
               <CardContent className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-4">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
+                  <div className="bg-secondary text-secondary-foreground flex size-10 shrink-0 items-center justify-center rounded-md">
                     <ClipboardCheck className="size-5" aria-hidden="true" />
                   </div>
                   <div>
@@ -49,12 +49,12 @@ export default async function AssessmentsPage() {
                         {serviceAreaLabels[item.scenario.serviceArea]}
                       </Badge>
                     </div>
-                    <p className="mt-1 text-sm text-muted-foreground">
+                    <p className="text-muted-foreground mt-1 text-sm">
                       {item.completedAt
                         ? dateFormatter.format(item.completedAt)
                         : "Completed"}
                     </p>
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p className="text-muted-foreground mt-2 text-sm">
                       {item.assessment?.strength}
                     </p>
                   </div>
@@ -64,7 +64,7 @@ export default async function AssessmentsPage() {
                     <p className="text-2xl font-bold">
                       {item.assessment?.overallScore}
                     </p>
-                    <p className="text-xs text-muted-foreground">out of 100</p>
+                    <p className="text-muted-foreground text-xs">out of 100</p>
                   </div>
                   <Button asChild size="icon" variant="outline">
                     <Link
@@ -84,8 +84,8 @@ export default async function AssessmentsPage() {
           <CardHeader>
             <CardTitle>No completed assessments yet</CardTitle>
             <CardDescription>
-              Complete a practice conversation to generate your first development
-              report.
+              Complete a practice conversation to generate your first
+              development report.
             </CardDescription>
           </CardHeader>
           <CardContent>

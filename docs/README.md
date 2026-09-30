@@ -10,7 +10,7 @@ This is a university prototype, not an IFI operational system or a formal employ
 
 ## Current status
 
-Phases 1–8 — Foundation through the admin scenario manager — are implemented:
+Phases 1–9 — the complete investor-demo prototype — are implemented:
 
 - Next.js App Router with strict TypeScript
 - Tailwind CSS and shared shadcn/ui components
@@ -30,6 +30,8 @@ Phases 1–8 — Foundation through the admin scenario manager — are implement
 - Database-backed manager participation, completion, and skill analytics
 - Admin scenario creation, editing, filtering, activation, and deactivation
 - Shared loading, empty, and recoverable error states
+- Automated desktop investor journey and mobile responsive smoke test with seed restoration
+- Docker pitch runbook and optional Vercel deployment configuration
 - ESLint, Prettier, type-check, and production-build scripts
 
 The learning material and service scenarios are source-informed prototype content, not official IFI policy or training material. See [Content sources and status](./CONTENT_SOURCES.md).
@@ -119,6 +121,8 @@ npm run typecheck
 npm run format:check
 npm run build
 npm run verify
+npx playwright install chromium # first run only
+npm run test:e2e
 ```
 
 ## Environment variables
@@ -140,6 +144,8 @@ Never commit `.env.local` or production secrets.
 - [Brand system](./BRAND_SYSTEM.md)
 - [Content sources and status](./CONTENT_SOURCES.md)
 - [Architecture decisions](./DECISIONS.md)
+- [Investor pitch runbook](./PITCH_RUNBOOK.md)
+- [Deployment guide](./DEPLOYMENT.md)
 
 ## Scope boundary
 

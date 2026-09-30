@@ -114,9 +114,7 @@ export const getManagerAnalytics = cache(async () => {
       : 0,
     completedSessions: assessedSessions.length,
     averageScore: average(
-      assessedSessions.map(
-        (session) => session.assessment?.overallScore ?? 0,
-      ),
+      assessedSessions.map((session) => session.assessment?.overallScore ?? 0),
     ),
     skills,
     trainingFocus: skills.reduce((lowest, skill) =>
@@ -128,6 +126,8 @@ export const getManagerAnalytics = cache(async () => {
 
 function average(values: number[]) {
   return values.length
-    ? Math.round(values.reduce((total, value) => total + value, 0) / values.length)
+    ? Math.round(
+        values.reduce((total, value) => total + value, 0) / values.length,
+      )
     : 0;
 }

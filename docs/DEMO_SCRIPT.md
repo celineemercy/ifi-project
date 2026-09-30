@@ -17,3 +17,5 @@ The complete prototype should support this exact story without broken screens.
 13. Review team skill scores, learning completion, and Suggested Training Focus.
 
 Every assessment screen must state that simulated feedback is intended for learning and development purposes and is not a formal employee-performance evaluation.
+
+Run `npm run test:e2e` for the repeatable cross-role rehearsal. The test resets the canonical seed before and after the journey so the demonstration always begins at the documented metrics.

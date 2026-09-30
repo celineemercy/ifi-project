@@ -47,7 +47,9 @@ export default async function UsersPage() {
                 <TableRow key={user.id}>
                   <TableCell>
                     <p className="font-medium">{user.name}</p>
-                    <p className="text-xs text-muted-foreground">{user.email}</p>
+                    <p className="text-muted-foreground text-xs">
+                      {user.email}
+                    </p>
                   </TableCell>
                   <TableCell>
                     <Badge
@@ -58,8 +60,11 @@ export default async function UsersPage() {
                   </TableCell>
                   <TableCell>{user.department ?? "Not assigned"}</TableCell>
                   <TableCell>
-                    {user.moduleProgress.filter((item) => item.completed).length}/
-                    {user._count.moduleProgress}
+                    {
+                      user.moduleProgress.filter((item) => item.completed)
+                        .length
+                    }
+                    /{user._count.moduleProgress}
                   </TableCell>
                   <TableCell className="text-right">
                     {user._count.simulationSessions}

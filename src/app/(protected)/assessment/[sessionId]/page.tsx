@@ -58,8 +58,8 @@ export default async function AssessmentPage({
         <Info aria-hidden="true" />
         <AlertTitle>For learning and development</AlertTitle>
         <AlertDescription>
-          This feedback supports personal practice. It is not a formal performance
-          evaluation or an HR decision-making tool.
+          This feedback supports personal practice. It is not a formal
+          performance evaluation or an HR decision-making tool.
         </AlertDescription>
       </Alert>
 
@@ -69,7 +69,7 @@ export default async function AssessmentPage({
             <CardDescription>Overall practice score</CardDescription>
             <CardTitle className="text-5xl">
               {assessment.overallScore}
-              <span className="text-lg font-medium text-muted-foreground">
+              <span className="text-muted-foreground text-lg font-medium">
                 /100
               </span>
             </CardTitle>
@@ -106,22 +106,22 @@ export default async function AssessmentPage({
       <div className="grid gap-5 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <TrendingUp className="size-5 text-primary" aria-hidden="true" />
+            <TrendingUp className="text-primary size-5" aria-hidden="true" />
             <CardTitle>What worked well</CardTitle>
           </CardHeader>
-          <CardContent className="text-sm leading-6 text-muted-foreground">
+          <CardContent className="text-muted-foreground text-sm leading-6">
             {assessment.strength}
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
             <MessageSquareText
-              className="size-5 text-brand-orange"
+              className="text-brand-orange size-5"
               aria-hidden="true"
             />
             <CardTitle>Try next time</CardTitle>
           </CardHeader>
-          <CardContent className="text-sm leading-6 text-muted-foreground">
+          <CardContent className="text-muted-foreground text-sm leading-6">
             {assessment.improvement}
           </CardContent>
         </Card>
@@ -131,15 +131,17 @@ export default async function AssessmentPage({
         <Card>
           <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-4">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
+              <div className="bg-secondary text-secondary-foreground flex size-10 shrink-0 items-center justify-center rounded-md">
                 <BookOpen className="size-5" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-sm font-medium text-primary">Recommended next</p>
+                <p className="text-primary text-sm font-medium">
+                  Recommended next
+                </p>
                 <h2 className="mt-1 text-lg font-semibold">
                   {assessment.recommendedModule.title}
                 </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="text-muted-foreground mt-1 text-sm">
                   {assessment.recommendedModule.description}
                 </p>
               </div>
@@ -163,8 +165,8 @@ export default async function AssessmentPage({
         </CardHeader>
         <CardContent className="space-y-4">
           {simulation.messages.map((message) => (
-            <div key={message.id} className="border-l-2 border-border pl-4">
-              <p className="text-xs font-semibold uppercase text-muted-foreground">
+            <div key={message.id} className="border-border border-l-2 pl-4">
+              <p className="text-muted-foreground text-xs font-semibold uppercase">
                 {message.role === "EMPLOYEE" ? "You" : "Visitor"}
               </p>
               <p className="mt-1 text-sm leading-6">{message.content}</p>

@@ -47,9 +47,7 @@ export default async function PracticeScenarioPage({
         <Badge variant="secondary">
           {serviceAreaLabels[scenario.serviceArea]}
         </Badge>
-        <Badge variant="outline">
-          {difficultyLabels[scenario.difficulty]}
-        </Badge>
+        <Badge variant="outline">{difficultyLabels[scenario.difficulty]}</Badge>
         {scenario.skills.map((skill) => (
           <Badge key={skill} variant="outline">
             {skill}
@@ -72,24 +70,26 @@ export default async function PracticeScenarioPage({
         <div className="grid gap-5 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <div className="flex size-10 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
+              <div className="bg-secondary text-secondary-foreground flex size-10 items-center justify-center rounded-md">
                 <UserRound className="size-5" aria-hidden="true" />
               </div>
               <CardTitle>Meet the visitor</CardTitle>
               <CardDescription>
-                The simulator will respond only as this visitor. You remain the IFI
-                employee throughout the conversation.
+                The simulator will respond only as this visitor. You remain the
+                IFI employee throughout the conversation.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <p>
-                <span className="font-medium text-foreground">Personality: </span>
+                <span className="text-foreground font-medium">
+                  Personality:{" "}
+                </span>
                 <span className="text-muted-foreground">
                   {scenario.customerPersonality}
                 </span>
               </p>
               <p>
-                <span className="font-medium text-foreground">Opening: </span>
+                <span className="text-foreground font-medium">Opening: </span>
                 <span className="text-muted-foreground">
                   {scenario.openingMessage}
                 </span>
@@ -99,7 +99,7 @@ export default async function PracticeScenarioPage({
 
           <Card>
             <CardHeader>
-              <div className="flex size-10 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
+              <div className="bg-secondary text-secondary-foreground flex size-10 items-center justify-center rounded-md">
                 <Target className="size-5" aria-hidden="true" />
               </div>
               <CardTitle>Learning objective</CardTitle>

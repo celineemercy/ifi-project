@@ -4,15 +4,8 @@ import { useActionState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { saveScenario } from "@/app/(protected)/admin/scenarios/actions";
-import {
-  difficultyLabels,
-  serviceAreaLabels,
-} from "@/config/scenarios";
-import {
-  ScenarioDifficulty,
-  ServiceArea,
-  type Scenario,
-} from "@/generated/prisma/client";
+import { difficultyLabels, serviceAreaLabels } from "@/config/scenarios";
+import type { Scenario } from "@/generated/prisma/client";
 import { initialScenarioState } from "@/components/admin/scenario-state";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -26,6 +19,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+
+const serviceAreas = [
+  "COURSES",
+  "CULTURE",
+  "MEDIATHEQUE",
+  "CAMPUS_FRANCE",
+  "ADMINISTRATION",
+] as const;
+const difficulties = ["EASY", "MEDIUM", "HARD"] as const;
 
 export function ScenarioForm({ scenario }: { scenario?: Scenario }) {
   const [state, formAction, pending] = useActionState(
@@ -78,13 +80,13 @@ export function ScenarioForm({ scenario }: { scenario?: Scenario }) {
           <Label htmlFor="serviceArea">Service area</Label>
           <Select
             name="serviceArea"
-            defaultValue={scenario?.serviceArea ?? ServiceArea.COURSES}
+            defaultValue={scenario?.serviceArea ?? "COURSES"}
           >
             <SelectTrigger id="serviceArea">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {Object.values(ServiceArea).map((area) => (
+              {serviceAreas.map((area) => (
                 <SelectItem key={area} value={area}>
                   {serviceAreaLabels[area]}
                 </SelectItem>
@@ -97,13 +99,13 @@ export function ScenarioForm({ scenario }: { scenario?: Scenario }) {
           <Label htmlFor="difficulty">Difficulty</Label>
           <Select
             name="difficulty"
-            defaultValue={scenario?.difficulty ?? ScenarioDifficulty.MEDIUM}
+            defaultValue={scenario?.difficulty ?? "MEDIUM"}
           >
             <SelectTrigger id="difficulty">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {Object.values(ScenarioDifficulty).map((difficulty) => (
+              {difficulties.map((difficulty) => (
                 <SelectItem key={difficulty} value={difficulty}>
                   {difficultyLabels[difficulty]}
                 </SelectItem>
@@ -160,7 +162,9 @@ export function ScenarioForm({ scenario }: { scenario?: Scenario }) {
           aria-invalid={Boolean(errorFor("skills"))}
           required
         />
-        <p className="text-xs text-muted-foreground">Separate skills with commas.</p>
+        <p className="text-muted-foreground text-xs">
+          Separate skills with commas.
+        </p>
         <FieldError message={errorFor("skills")} />
       </div>
 
@@ -195,6 +199,6 @@ export function ScenarioForm({ scenario }: { scenario?: Scenario }) {
 
 function FieldError({ message }: { message?: string }) {
   return message ? (
-    <p className="text-xs font-medium text-destructive">{message}</p>
+    <p className="text-destructive text-xs font-medium">{message}</p>
   ) : null;
 }

@@ -138,8 +138,7 @@ export const getStaffLearningSummary = cache(async (userId: string) => {
     completedSessions: sessions.length,
     averageScore,
     skillAverages,
-    recommendedModule:
-      scoredSessions[0]?.assessment?.recommendedModule ?? null,
+    recommendedModule: scoredSessions[0]?.assessment?.recommendedModule ?? null,
     moduleProgress: progress,
   };
 });

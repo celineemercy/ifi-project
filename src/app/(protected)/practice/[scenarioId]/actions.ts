@@ -12,10 +12,7 @@ import {
   startSimulation,
 } from "@/services/simulation.service";
 
-export async function startPractice(
-  scenarioId: string,
-  _formData: FormData,
-) {
+export async function startPractice(scenarioId: string) {
   const session = await requireRole(["STAFF"]);
   const simulation = await startSimulation(session.user.id, scenarioId);
   revalidatePath("/practice");
@@ -46,7 +43,7 @@ export async function sendPracticeMessage(
   return { status: "success", message: "Response sent." };
 }
 
-export async function endPractice(sessionId: string, _formData: FormData) {
+export async function endPractice(sessionId: string) {
   const session = await requireRole(["STAFF"]);
   const assessment = await completeSimulation(session.user.id, sessionId);
   if (!assessment) redirect("/practice");
@@ -58,7 +55,7 @@ export async function endPractice(sessionId: string, _formData: FormData) {
   redirect(`/assessment/${sessionId}`);
 }
 
-export async function abandonPractice(sessionId: string, _formData: FormData) {
+export async function abandonPractice(sessionId: string) {
   const session = await requireRole(["STAFF"]);
   await abandonSimulation(session.user.id, sessionId);
   revalidatePath("/practice");

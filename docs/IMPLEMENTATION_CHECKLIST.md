@@ -77,9 +77,9 @@ A phase does not advance while lint, type-check, relevant tests, or the producti
 
 ## Phase 9 — Demo Polish
 
-- [ ] Complete responsive and accessibility review
+- [x] Complete responsive and accessibility review
 - [x] Add loading, empty, and error states
-- [ ] Add critical Playwright demo journey
-- [ ] Rehearse the deterministic simulation journey
-- [ ] Document optional Vercel deployment
-- [ ] Run final production build and demo rehearsal
+- [x] Add critical Playwright demo journey
+- [x] Rehearse the deterministic simulation journey
+- [x] Document optional Vercel deployment
+- [x] Run final production build and demo rehearsal
